@@ -8,6 +8,7 @@ extends Node
 @onready var tiles_grid := get_tree().current_scene.get_node("Tiles_grid")
 @onready var cables_panel := get_tree().current_scene.get_node("Cable_Panel")
 @onready var honey_badger := get_tree().current_scene.get_node("Honey_Badger")
+@onready var dynamite := get_tree().current_scene.get_node("Dynamite")
 var current_level_data: Dictionary = {}
 
 
@@ -20,6 +21,7 @@ func _ready() -> void:
 
 func load_level(level_number: int) -> void:
 	var levels_data := load_levels_json()
+
 
 	if levels_data.is_empty():
 		push_error("Levels JSON is empty or could not be loaded.")
@@ -41,6 +43,10 @@ func load_level(level_number: int) -> void:
 	tiles_grid.build_grid(grid_width, grid_height)
 	cables_panel.align_with_grid(tiles_grid)
 	honey_badger.align_with_grid(tiles_grid)
+	
+	# Get the dinamite pos
+	var dynamite_pos: Array = level_data["dynamite_exit"]
+	dynamite.align_with_grid(tiles_grid, Vector2i(dynamite_pos[0], dynamite_pos[1]))
 
 	print("Loaded level: ", level_number)
 	print("Grid size: ", grid_width, " x ", grid_height)
@@ -87,3 +93,18 @@ func find_level_data(levels_data: Dictionary, level_number: int) -> Dictionary:
 			return level
 
 	return {}
+
+
+# RESET BUTTON - RELOAD JSON
+func reset_current_level() -> void:
+	print("RESET CURRENT LEVEL CALLED")
+	print("Current level data: ", current_level_data)
+
+	if current_level_data.is_empty():
+		push_error("No current level loaded to reset.")
+		return
+
+	var level_number: int = int(current_level_data["level"])
+	print("Resetting level: ", level_number)
+
+	load_level(level_number)

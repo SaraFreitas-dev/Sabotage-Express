@@ -8,7 +8,11 @@ func _ready():
 
 
 func _on_pressed():
-	pass
+	var train = get_tree().current_scene.get_node("Train")
+	train.reset()
+	train.start_moving()
+	LevelManager.reset_current_level()
+
 
 func _on_hover():
 	var tween = create_tween()

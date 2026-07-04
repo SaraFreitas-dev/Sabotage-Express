@@ -109,7 +109,20 @@ func get_tile_rotation(x: int, y: int, w: int, h: int) -> float:
 
 	return 0.0
 
+
+# Get the grid tiles positions to add the dinamite and extra pieces / decor
+func grid_to_world(col: int, row: int) -> Vector2:
+	var screen_width := get_viewport_rect().size.x
+	var grid_pixel_width := grid_width * TILE_SIZE
+	var start_x := (screen_width - grid_pixel_width) / 2.0
+	var start_y := grid_y_position
 	
+	return Vector2(
+		start_x + col * TILE_SIZE + TILE_SIZE / 2,
+		start_y + row * TILE_SIZE + TILE_SIZE / 2
+	)
+
+
 """ For tests only !!!! Build a grid while there is no JSON
 func _ready() -> void:
 	build_grid(9, 7)

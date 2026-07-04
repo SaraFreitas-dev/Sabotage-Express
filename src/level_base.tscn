@@ -9,20 +9,39 @@
 [ext_resource type="Script" uid="uid://ygbwnon53rwv" path="res://src/train.gd" id="6_h23so"]
 [ext_resource type="Texture2D" uid="uid://ca4b8f54oyef7" path="res://Images/train/train_1.png" id="7_dlm8i"]
 [ext_resource type="Texture2D" uid="uid://t1i61vtajbwm" path="res://Images/banners_and_tools/cable_panel.png" id="7_wdep5"]
+[ext_resource type="Script" uid="uid://l2n404b5tu1r" path="res://src/dinamite.gd" id="8_6x0dg"]
 [ext_resource type="Texture2D" uid="uid://brubi63h1gpkr" path="res://Images/train/train_2.png" id="8_bygqa"]
+[ext_resource type="Texture2D" uid="uid://cskwr25oxqjpu" path="res://Images/dinamite_detonator/dinamite.png" id="9_4mmqw"]
 [ext_resource type="AudioStream" uid="uid://6ka7m1whdhcq" path="res://music/instruments.wav" id="9_6cjsv"]
 [ext_resource type="Script" uid="uid://cx0rleqkmyvcg" path="res://src/music_button.gd" id="9_fsv82"]
 [ext_resource type="Texture2D" uid="uid://jorkmjnpdnd3" path="res://Images/banners_and_tools/music_button.png" id="10_6cjsv"]
-[ext_resource type="Texture2D" uid="uid://p3aqxxvi3gud" path="res://Images/Characters/Honey_Badger/honey_badger2.png" id="10_gbfln"]
 [ext_resource type="Script" uid="uid://6h5jv6q5irh4" path="res://src/honey_badger.gd" id="11_avtfv"]
-[ext_resource type="Texture2D" uid="uid://dos3qkfqmik4m" path="res://Images/Characters/Honey_Badger/honey_badger3.png" id="11_wdep5"]
-[ext_resource type="Texture2D" uid="uid://dqtkrqhmx2c0i" path="res://Images/Characters/Honey_Badger/honey_badger4.png" id="12_avtfv"]
+[ext_resource type="Texture2D" uid="uid://cuv0fhy35xrl2" path="res://Images/Characters/Honey_Badger/honey_badger1.png" id="11_faf4n"]
 [ext_resource type="Texture2D" uid="uid://bap43o76f1sa3" path="res://Images/banners_and_tools/Info_Button.png" id="12_dlm8i"]
 [ext_resource type="Texture2D" uid="uid://ctdb5jjjoi0ei" path="res://Images/banners_and_tools/Menu_Button.png" id="13_bygqa"]
 [ext_resource type="Script" uid="uid://dvcpbvy7132n2" path="res://src/info_button.gd" id="13_kuqqc"]
+[ext_resource type="Texture2D" uid="uid://buquv2mkb7uvv" path="res://Images/Characters/Honey_Badger/honey_badger3.png" id="13_n5y8f"]
+[ext_resource type="Texture2D" uid="uid://26cuap2y1dgv" path="res://Images/Characters/Honey_Badger/honey_badger4.png" id="14_2nqba"]
 [ext_resource type="Texture2D" uid="uid://ghmq15gvvb8" path="res://Images/banners_and_tools/Replay_Button.png" id="14_ax5nw"]
 [ext_resource type="Script" uid="uid://b6m463j6e1nwv" path="res://src/menu_button.gd" id="15_bvd22"]
 [ext_resource type="Script" uid="uid://cvlbp2prcgt22" path="res://src/replay_button.gd" id="17_8fado"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fv6mk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_faf4n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_n5y8f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_2nqba")
+}],
+"loop": 1,
+"name": &"honey_badger_detonator",
+"speed": 3.0
+}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_igemj"]
 animations = [{
@@ -35,23 +54,6 @@ animations = [{
 }],
 "loop": 1,
 "name": &"Train_moving",
-"speed": 5.0
-}]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_fv6mk"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("10_gbfln")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_wdep5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_avtfv")
-}],
-"loop": 1,
-"name": &"honey_badger_detonator",
 "speed": 5.0
 }]
 
@@ -81,6 +83,24 @@ script = ExtResource("6_bvd22")
 scale = Vector2(0.7, 0.729)
 texture = ExtResource("7_wdep5")
 
+[node name="Dynamite" type="Node2D" parent="." unique_id=1599099738]
+script = ExtResource("8_6x0dg")
+
+[node name="Dynamite_Img" type="Sprite2D" parent="Dynamite" unique_id=2042742113]
+rotation = -1.5707964
+texture = ExtResource("9_4mmqw")
+
+[node name="Honey_Badger" type="Node2D" parent="." unique_id=1199431787]
+scale = Vector2(0.4, 0.4)
+script = ExtResource("11_avtfv")
+
+[node name="badger_animation" type="AnimatedSprite2D" parent="Honey_Badger" unique_id=990882896]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_fv6mk")
+animation = &"honey_badger_detonator"
+autoplay = "honey_badger_detonator"
+frame_progress = 0.5880668
+
 [node name="Train" type="Node2D" parent="." unique_id=517424086]
 script = ExtResource("6_h23so")
 debug_force_show = true
@@ -91,14 +111,6 @@ scale = Vector2(0.47777775, 0.47777778)
 sprite_frames = SubResource("SpriteFrames_igemj")
 animation = &"Train_moving"
 autoplay = "Train_moving"
-
-[node name="Honey_Badger" type="Node2D" parent="." unique_id=1199431787]
-scale = Vector2(0.4, 0.4)
-script = ExtResource("11_avtfv")
-
-[node name="badger_animation" type="AnimatedSprite2D" parent="Honey_Badger" unique_id=990882896]
-sprite_frames = SubResource("SpriteFrames_fv6mk")
-animation = &"honey_badger_detonator"
 
 [node name="Music_Player" type="AudioStreamPlayer2D" parent="." unique_id=2041318613]
 stream = ExtResource("9_6cjsv")
@@ -153,6 +165,7 @@ custom_maximum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
+mouse_filter = 2
 
 [node name="Replay_Button" type="TextureButton" parent="UI/Buttons_container" unique_id=1441463438]
 custom_minimum_size = Vector2(50, 50)
