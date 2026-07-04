@@ -1,33 +1,89 @@
+# level_manager.gd
 extends Node
 
-var current_level: int = 1
+@export var level_to_load: int = 1
+@export var levels_json_path: String = "res://data/levels_data.json"
+
+# To align the elements
+@onready var tiles_grid := get_tree().current_scene.get_node("Tiles_grid")
+@onready var cables_panel := get_tree().current_scene.get_node("Cable_Panel")
+@onready var honey_badger := get_tree().current_scene.get_node("Honey_Badger")
 var current_level_data: Dictionary = {}
-var max_level: int = 3
 
-# READ JSON LEVEL
-signal level_loaded(data: Dictionary)
 
-func load_level(level_number: int):
-	current_level = level_number
-	var path = "res://data/levels/level_%02d.json" % level_number
-	
-	if not FileAccess.file_exists(path):
-		push_error("Nível não encontrado: " + path)
+func _ready() -> void:
+	# Wait one frame so level_base is fully loaded
+	await get_tree().process_frame
+	# For tests only !!!! While there is no level selection yet
+	load_level(level_to_load)
+
+
+func load_level(level_number: int) -> void:
+	var levels_data := load_levels_json()
+
+	if levels_data.is_empty():
+		push_error("Levels JSON is empty or could not be loaded.")
 		return
-	
-	var file = FileAccess.open(path, FileAccess.READ)
-	var json_text = file.get_as_text()
+
+	var level_data := find_level_data(levels_data, level_number)
+
+	if level_data.is_empty():
+		push_error("Level %s not found in JSON." % level_number)
+		return
+
+	current_level_data = level_data
+
+	var size: Array = level_data["size"]
+	var grid_width: int = int(size[0])
+	var grid_height: int = int(size[1])
+
+	# Center the elements
+	tiles_grid.build_grid(grid_width, grid_height)
+	cables_panel.align_with_grid(tiles_grid)
+	honey_badger.align_with_grid(tiles_grid)
+
+	print("Loaded level: ", level_number)
+	print("Grid size: ", grid_width, " x ", grid_height)
+	print("Time limit: ", level_data["time_limit"])
+	print("Detonator entry: ", level_data["detonator_entry"])
+	print("Dynamite exit: ", level_data["dynamite_exit"])
+	print("Blocked cells: ", level_data["blocked_cells"])
+	print("Pieces: ", level_data["pieces"])
+	print("Refreshes: ", level_data["refreshes"])
+
+
+func load_levels_json() -> Dictionary:
+	if not FileAccess.file_exists(levels_json_path):
+		push_error("Levels JSON file not found: " + levels_json_path)
+		return {}
+
+	var file := FileAccess.open(levels_json_path, FileAccess.READ)
+
+	if file == null:
+		push_error("Could not open levels JSON file: " + levels_json_path)
+		return {}
+
+	var json_text := file.get_as_text()
 	file.close()
-	
-	var json = JSON.new()
-	var error = json.parse(json_text)
-	if error != OK:
-		push_error("Erro ao fazer parse do JSON: " + json.get_error_message())
-		return
-	
-	current_level_data = json.data
-	level_loaded.emit(current_level_data)
 
-func go_to_next_level():
-	if current_level < max_level:
-		load_level(current_level + 1)
+	var json := JSON.new()
+	var error := json.parse(json_text)
+
+	if error != OK:
+		push_error("JSON parse error: " + json.get_error_message())
+		push_error("Error line: " + str(json.get_error_line()))
+		return {}
+
+	return json.data
+
+
+func find_level_data(levels_data: Dictionary, level_number: int) -> Dictionary:
+	if not levels_data.has("levels"):
+		push_error("JSON does not contain 'levels'.")
+		return {}
+
+	for level in levels_data["levels"]:
+		if int(level["level"]) == level_number:
+			return level
+
+	return {}

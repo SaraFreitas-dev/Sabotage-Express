@@ -8,10 +8,15 @@
 [ext_resource type="Script" uid="uid://dajkmy1r08h07" path="res://src/cable_panel.gd" id="6_bvd22"]
 [ext_resource type="Script" uid="uid://ygbwnon53rwv" path="res://src/train.gd" id="6_h23so"]
 [ext_resource type="Texture2D" uid="uid://ca4b8f54oyef7" path="res://Images/train/train_1.png" id="7_dlm8i"]
+[ext_resource type="Texture2D" uid="uid://t1i61vtajbwm" path="res://Images/banners_and_tools/cable_panel.png" id="7_wdep5"]
 [ext_resource type="Texture2D" uid="uid://brubi63h1gpkr" path="res://Images/train/train_2.png" id="8_bygqa"]
 [ext_resource type="AudioStream" uid="uid://6ka7m1whdhcq" path="res://music/instruments.wav" id="9_6cjsv"]
 [ext_resource type="Script" uid="uid://cx0rleqkmyvcg" path="res://src/music_button.gd" id="9_fsv82"]
 [ext_resource type="Texture2D" uid="uid://jorkmjnpdnd3" path="res://Images/banners_and_tools/music_button.png" id="10_6cjsv"]
+[ext_resource type="Texture2D" uid="uid://p3aqxxvi3gud" path="res://Images/Characters/Honey_Badger/honey_badger2.png" id="10_gbfln"]
+[ext_resource type="Script" uid="uid://6h5jv6q5irh4" path="res://src/honey_badger.gd" id="11_avtfv"]
+[ext_resource type="Texture2D" uid="uid://dos3qkfqmik4m" path="res://Images/Characters/Honey_Badger/honey_badger3.png" id="11_wdep5"]
+[ext_resource type="Texture2D" uid="uid://dqtkrqhmx2c0i" path="res://Images/Characters/Honey_Badger/honey_badger4.png" id="12_avtfv"]
 [ext_resource type="Texture2D" uid="uid://bap43o76f1sa3" path="res://Images/banners_and_tools/Info_Button.png" id="12_dlm8i"]
 [ext_resource type="Texture2D" uid="uid://ctdb5jjjoi0ei" path="res://Images/banners_and_tools/Menu_Button.png" id="13_bygqa"]
 [ext_resource type="Script" uid="uid://dvcpbvy7132n2" path="res://src/info_button.gd" id="13_kuqqc"]
@@ -33,16 +38,37 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_fv6mk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_gbfln")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_wdep5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_avtfv")
+}],
+"loop": 1,
+"name": &"honey_badger_detonator",
+"speed": 5.0
+}]
+
 [node name="level_base" type="Node2D" unique_id=1447306302]
 metadata/_edit_lock_ = true
 
 [node name="BG" type="Sprite2D" parent="." unique_id=2036484229]
+light_mask = 8
+visibility_layer = 8
 position = Vector2(641, 369.50003)
 scale = Vector2(0.8378906, 0.7705079)
 texture = ExtResource("1_hmvch")
 metadata/_edit_lock_ = true
 
 [node name="Tiles_grid" type="Node2D" parent="." unique_id=1732861057]
+light_mask = 8
+visibility_layer = 8
 script = ExtResource("2_8epqt")
 corner_tile = ExtResource("3_fsv82")
 edge_tile = ExtResource("4_6cjsv")
@@ -50,6 +76,10 @@ normal_tile = ExtResource("5_6umbf")
 
 [node name="Cable_Panel" type="Node2D" parent="." unique_id=1130265675]
 script = ExtResource("6_bvd22")
+
+[node name="Panel_BG" type="Sprite2D" parent="Cable_Panel" unique_id=1128777898]
+scale = Vector2(0.7, 0.729)
+texture = ExtResource("7_wdep5")
 
 [node name="Train" type="Node2D" parent="." unique_id=517424086]
 script = ExtResource("6_h23so")
@@ -61,6 +91,14 @@ scale = Vector2(0.47777775, 0.47777778)
 sprite_frames = SubResource("SpriteFrames_igemj")
 animation = &"Train_moving"
 autoplay = "Train_moving"
+
+[node name="Honey_Badger" type="Node2D" parent="." unique_id=1199431787]
+scale = Vector2(0.4, 0.4)
+script = ExtResource("11_avtfv")
+
+[node name="badger_animation" type="AnimatedSprite2D" parent="Honey_Badger" unique_id=990882896]
+sprite_frames = SubResource("SpriteFrames_fv6mk")
+animation = &"honey_badger_detonator"
 
 [node name="Music_Player" type="AudioStreamPlayer2D" parent="." unique_id=2041318613]
 stream = ExtResource("9_6cjsv")
@@ -125,3 +163,11 @@ size_flags_vertical = 4
 texture_normal = ExtResource("14_ax5nw")
 stretch_mode = 5
 script = ExtResource("17_8fado")
+
+[node name="Timer_Panel" type="Node2D" parent="UI" unique_id=514715776]
+
+[node name="Plank_Sprite" type="Sprite2D" parent="UI/Timer_Panel" unique_id=1946298398]
+
+[node name="Time_Label" type="Label" parent="UI/Timer_Panel" unique_id=810649271]
+offset_right = 40.0
+offset_bottom = 23.0

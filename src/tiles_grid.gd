@@ -1,4 +1,3 @@
-# grid.gd
 extends Node2D
 
 const TILE_SIZE := 70
@@ -52,11 +51,13 @@ func build_grid(width: int, height: int) -> void:
 			add_child(sprite)
 
 
-# To center the grid alongside the cables panel
+# To center the grid alongside the cables panel:
+# Calculate the size of the grid
 func get_grid_size() -> Vector2:
 	return Vector2(grid_width * TILE_SIZE, grid_height * TILE_SIZE)
 
 
+# Calculate the center of the grid
 func get_grid_center_global() -> Vector2:
 	return global_position + get_grid_size() / 2.0
 
@@ -107,9 +108,9 @@ func get_tile_rotation(x: int, y: int, w: int, h: int) -> float:
 		return 270.0
 
 	return 0.0
+
 	
-	
-	
-# For tests only !!!! While there is no JSON
+""" For tests only !!!! Build a grid while there is no JSON
 func _ready() -> void:
 	build_grid(9, 7)
+"""
