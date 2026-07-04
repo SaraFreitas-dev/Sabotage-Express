@@ -25,6 +25,9 @@
 [ext_resource type="Texture2D" uid="uid://ghmq15gvvb8" path="res://Images/banners_and_tools/Replay_Button.png" id="14_ax5nw"]
 [ext_resource type="Script" uid="uid://b6m463j6e1nwv" path="res://src/menu_button.gd" id="15_bvd22"]
 [ext_resource type="Script" uid="uid://cvlbp2prcgt22" path="res://src/replay_button.gd" id="17_8fado"]
+[ext_resource type="Script" uid="uid://cpx48nlufu22r" path="res://src/timer_panel.gd" id="26_0oqr6"]
+[ext_resource type="Texture2D" uid="uid://ppw7m3d270ia" path="res://Images/banners_and_tools/Time_Panel.png" id="27_n5y8f"]
+[ext_resource type="FontFile" uid="uid://dbg54fedpawpb" path="res://Images/text_fonts/Rye-Regular.ttf" id="28_n5y8f"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fv6mk"]
 animations = [{
@@ -128,6 +131,7 @@ offset_bottom = 60.0
 grow_horizontal = 0
 size_flags_horizontal = 4
 theme_override_constants/separation = -38
+alignment = 1
 
 [node name="Music_Button" type="TextureButton" parent="UI/Buttons_container" unique_id=49599035]
 custom_minimum_size = Vector2(50, 50)
@@ -177,10 +181,36 @@ texture_normal = ExtResource("14_ax5nw")
 stretch_mode = 5
 script = ExtResource("17_8fado")
 
-[node name="Timer_Panel" type="Node2D" parent="UI" unique_id=514715776]
+[node name="Timer_Panel" type="Control" parent="UI" unique_id=2115846932]
+light_mask = 2
+visibility_layer = 2
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+scale = Vector2(0.3, 0.3)
+size_flags_horizontal = 4
+script = ExtResource("26_0oqr6")
 
 [node name="Plank_Sprite" type="Sprite2D" parent="UI/Timer_Panel" unique_id=1946298398]
+texture = ExtResource("27_n5y8f")
 
 [node name="Time_Label" type="Label" parent="UI/Timer_Panel" unique_id=810649271]
-offset_right = 40.0
-offset_bottom = 23.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 1.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("28_n5y8f")
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1

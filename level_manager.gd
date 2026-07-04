@@ -7,6 +7,8 @@ extends Node
 # To align the elements
 @onready var tiles_grid := get_tree().current_scene.get_node("Tiles_grid")
 @onready var cables_panel := get_tree().current_scene.get_node("Cable_Panel")
+
+@onready var timer_panel := get_tree().current_scene.get_node("UI/Timer_Panel")
 @onready var honey_badger := get_tree().current_scene.get_node("Honey_Badger")
 @onready var dynamite := get_tree().current_scene.get_node("Dynamite")
 var current_level_data: Dictionary = {}
@@ -39,10 +41,11 @@ func load_level(level_number: int) -> void:
 	var grid_width: int = int(size[0])
 	var grid_height: int = int(size[1])
 
-	# Center the elements
+	# Center / Add the elements
 	tiles_grid.build_grid(grid_width, grid_height)
 	cables_panel.align_with_grid(tiles_grid)
 	honey_badger.align_with_grid(tiles_grid)
+	timer_panel.start_countdown(level_data["time_limit"])
 	
 	# Get the dinamite pos
 	var dynamite_pos: Array = level_data["dynamite_exit"]
@@ -95,7 +98,7 @@ func find_level_data(levels_data: Dictionary, level_number: int) -> Dictionary:
 	return {}
 
 
-# RESET BUTTON - RELOAD JSON
+# FOR THE RESET BUTTON - RELOAD JSON
 func reset_current_level() -> void:
 	print("RESET CURRENT LEVEL CALLED")
 	print("Current level data: ", current_level_data)
