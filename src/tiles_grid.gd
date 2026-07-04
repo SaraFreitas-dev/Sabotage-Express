@@ -20,35 +20,49 @@ func build_grid(width: int, height: int) -> void:
 	grid_width = width
 	grid_height = height
 	
+	# Clean the previous grid board
 	for child in get_children():
 		child.queue_free()
 	
+	# Center the whole grid horizontally
 	var screen_width := get_viewport_rect().size.x
 	var grid_pixel_width := width * TILE_SIZE
-	var start_x := (screen_width - grid_pixel_width) / 2.0
-	var start_y := grid_y_position
-	
+
+	position.x = (screen_width - grid_pixel_width) / 2.0
+	position.y = grid_y_position
+
 	for y in range(height):
 		for x in range(width):
 			var sprite := Sprite2D.new()
-			var tex := get_tile_texture(x, y, width, height)
-			sprite.texture = tex
+			sprite.texture = get_tile_texture(x, y, width, height)
 			sprite.rotation_degrees = get_tile_rotation(x, y, width, height)
-			
-			# escala calculada por textura, força sempre TILE_SIZE x TILE_SIZE exato
+
+			var texture_size := sprite.texture.get_size()
 			sprite.scale = Vector2(
-				float(TILE_SIZE) / tex.get_width(),
-				float(TILE_SIZE) / tex.get_height()
+				float(TILE_SIZE) / texture_size.x,
+				float(TILE_SIZE) / texture_size.y
 			)
-			
+
+			# Position by center of each cell, local to Tiles_grid
 			sprite.position = Vector2(
-				start_x + x * TILE_SIZE + TILE_SIZE / 2,
-				start_y + y * TILE_SIZE + TILE_SIZE / 2
+				x * TILE_SIZE + TILE_SIZE / 2,
+				y * TILE_SIZE + TILE_SIZE / 2
 			)
+
 			add_child(sprite)
 
 
+# To center the grid alongside the cables panel
+func get_grid_size() -> Vector2:
+	return Vector2(grid_width * TILE_SIZE, grid_height * TILE_SIZE)
+
+
+func get_grid_center_global() -> Vector2:
+	return global_position + get_grid_size() / 2.0
+
+
 func get_tile_texture(x: int, y: int, w: int, h: int) -> Texture2D:
+	# Choose the correct image depending on the location of the grid
 	var is_left := x == 0
 	var is_right := x == w - 1
 	var is_top := y == 0
@@ -70,7 +84,7 @@ func get_tile_rotation(x: int, y: int, w: int, h: int) -> float:
 	var is_top := y == 0
 	var is_bottom := y == h - 1
 
-	# Corners
+	# Corners - Rotate images if needed
 	# tile_border_corners.png = top-left corner
 	if is_top and is_left:
 		return 0.0
@@ -81,7 +95,7 @@ func get_tile_rotation(x: int, y: int, w: int, h: int) -> float:
 	if is_bottom and is_left:
 		return 270.0
 
-	# Edges
+	# Edges - Rotate images if needed
 	# grid_tile_edge.png = left edge
 	if is_left:
 		return 0.0
@@ -98,4 +112,4 @@ func get_tile_rotation(x: int, y: int, w: int, h: int) -> float:
 	
 # For tests only !!!! While there is no JSON
 func _ready() -> void:
-	build_grid(7, 7)
+	build_grid(9, 7)

@@ -4,6 +4,7 @@ var current_level: int = 1
 var current_level_data: Dictionary = {}
 var max_level: int = 3
 
+# READ JSON LEVEL
 signal level_loaded(data: Dictionary)
 
 func load_level(level_number: int):
