@@ -6,7 +6,8 @@ func _ready():
 	pressed.connect(_on_pressed)
 
 func _on_pressed():
-	pass  # TAI: connect to menu scene
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://src/menu/Intro.tscn")
 
 func _on_hover():
 	var tween = create_tween()

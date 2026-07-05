@@ -4,26 +4,34 @@ extends Node
 @export var level_to_load: int = 1
 @export var levels_json_path: String = "res://data/levels_data.json"
 
-# To align the elements
-@onready var tiles_grid := get_tree().current_scene.get_node("Tiles_grid")
-@onready var cables_panel := get_tree().current_scene.get_node("Cable_Panel")
-
-@onready var timer_panel := get_tree().current_scene.get_node("UI/Timer_Panel")
-@onready var honey_badger := get_tree().current_scene.get_node("Honey_Badger")
-@onready var dynamite := get_tree().current_scene.get_node("Dynamite")
+# NOTE: these used to be @onready vars resolved against get_tree().current_scene
+# at autoload startup. Now that the game boots into the menu (Intro.tscn) first
+# instead of directly into level_base.tscn, that scene doesn't exist yet when
+# this autoload becomes ready, so the references are grabbed lazily instead,
+# via start_level(), which is called once level_base.tscn actually becomes
+# the current scene (see src/level_base.gd).
+var tiles_grid: Node
+var cables_panel: Node
+var timer_panel: Node
+var honey_badger: Node
+var dynamite: Node
 var current_level_data: Dictionary = {}
 
 
-func _ready() -> void:
-	# Wait one frame so level_base is fully loaded
-	await get_tree().process_frame
-	# For tests only !!!! While there is no level selection yet
-	load_level(level_to_load)
+func start_level(level_number: int) -> void:
+	# Called by level_base.gd once the level scene is fully loaded.
+	var scene := get_tree().current_scene
+	tiles_grid = scene.get_node("Tiles_grid")
+	cables_panel = scene.get_node("Cable_Panel")
+	timer_panel = scene.get_node("UI/Timer_Panel")
+	honey_badger = scene.get_node("Honey_Badger")
+	dynamite = scene.get_node("Dynamite")
+
+	load_level(level_number)
 
 
 func load_level(level_number: int) -> void:
 	var levels_data := load_levels_json()
-
 
 	if levels_data.is_empty():
 		push_error("Levels JSON is empty or could not be loaded.")
@@ -43,8 +51,8 @@ func load_level(level_number: int) -> void:
 
 	# Center / Add the elements
 	tiles_grid.build_grid(grid_width, grid_height)
-	
-		# Define os pontos de entrada e saída para a lógica de vitória
+
+	# Define os pontos de entrada e saída para a lógica de vitória
 	var entry_pos: Array = level_data["detonator_entry"]
 	var exit_pos: Array = level_data["dynamite_exit"]
 	tiles_grid.set_endpoints(
@@ -56,7 +64,7 @@ func load_level(level_number: int) -> void:
 	cables_panel.setup_hand(level_data["pieces"])  # TUBES
 	honey_badger.align_with_grid(tiles_grid)
 	timer_panel.start_countdown(level_data["time_limit"])
-	
+
 	# Get the dinamite pos
 	var dynamite_pos: Array = level_data["dynamite_exit"]
 	dynamite.align_with_grid(tiles_grid, Vector2i(dynamite_pos[0], dynamite_pos[1]))

@@ -9,9 +9,6 @@ func _ready():
 
 func _on_pressed():
 	var train = get_tree().current_scene.get_node("Train")
-	var train_sounds = get_tree().current_scene.get_node("Train_Sounds")
-	
-	train_sounds.stop()
 	train.reset()
 	train.start_moving()
 	LevelManager.reset_current_level()

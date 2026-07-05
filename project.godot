@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Sabotage-express"
-run/main_scene="uid://cd6qrkdqk4npp"
+run/main_scene="uid://2x85hll5yn2q"
 config/features=PackedStringArray("4.7", "Forward Plus")
 
 [autoload]

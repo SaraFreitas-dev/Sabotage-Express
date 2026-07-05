@@ -8,11 +8,11 @@
 	  "dynamite_exit": [8, 3],
 	  "blocked_cells": [[1, 3]],
 	  "pieces": {
-		"straight": { "image": "res://Images/tubes/straight.jpeg", "amount": 5 },
-		"elbow":    { "image": "res://Images/tubes/elbow.jpeg", "amount": 5 },
-		"tip": { "image": "res://Images/tubes/tip.jpeg", "amount": 0 },
-		"t-shape": { "image": "res://Images/tubes/t-shape.jpeg", "amount": 0 },
-		"cross": { "image": "res://Images/tubes/cross.jpeg", "amount": 0 }
+		"straight": { "image": "res://Images/tubes/straight.png", "amount": 5 },
+		"elbow":    { "image": "res://Images/tubes/elbow.png", "amount": 5 },
+		"tip": { "image": "res://Images/tubes/t.png", "amount": 0 },
+		"t-shape": { "image": "res://Images/tubes/termination.png", "amount": 0 },
+		"cross": { "image": "res://Images/tubes/cross.png", "amount": 0 }
 	  },
 	  "refreshes": 1
 	},
