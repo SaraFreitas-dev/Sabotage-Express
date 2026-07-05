@@ -15,9 +15,11 @@ const ORIGINAL_TILE_SIZE := 154
 var grid_width: int
 var grid_height: int
 
+
 func build_grid(width: int, height: int) -> void:
 	grid_width = width
 	grid_height = height
+	occupied_cells.clear() # CLEAN PREVIOUS CABLES
 	
 	# Clean the previous grid board
 	for child in get_children():
@@ -111,17 +113,42 @@ func get_tile_rotation(x: int, y: int, w: int, h: int) -> float:
 
 
 # Get the grid tiles positions to add the dinamite and extra pieces / decor
-func grid_to_world(col: int, row: int) -> Vector2:
-	var screen_width := get_viewport_rect().size.x
-	var grid_pixel_width := grid_width * TILE_SIZE
-	var start_x := (screen_width - grid_pixel_width) / 2.0
-	var start_y := grid_y_position
-	
-	return Vector2(
-		start_x + col * TILE_SIZE + TILE_SIZE / 2,
-		start_y + row * TILE_SIZE + TILE_SIZE / 2
+func grid_to_world(cell: Vector2i) -> Vector2:
+	return global_position + Vector2(
+		cell.x * TILE_SIZE + TILE_SIZE / 2.0,
+		cell.y * TILE_SIZE + TILE_SIZE / 2.0
 	)
 
+
+func world_to_grid(world_position: Vector2) -> Vector2i:
+	var local_position: Vector2 = world_position - global_position
+
+	return Vector2i(
+		int(local_position.x / TILE_SIZE),
+		int(local_position.y / TILE_SIZE)
+	)
+
+
+# To prevent adding pieces outside of the grid
+func is_inside_grid(cell: Vector2i) -> bool:
+	return (
+		cell.x >= 0
+		and cell.x < grid_width
+		and cell.y >= 0
+		and cell.y < grid_height
+	)
+
+# FOR THE CABLES
+var occupied_cells: Dictionary = {}  # Vector2i -> piece node
+
+func is_cell_occupied(cell: Vector2i) -> bool:
+	return occupied_cells.has(cell)
+
+func occupy_cell(cell: Vector2i, piece: Node) -> void:
+	occupied_cells[cell] = piece
+
+func free_cell(cell: Vector2i) -> void:
+	occupied_cells.erase(cell)
 
 """ For tests only !!!! Build a grid while there is no JSON
 func _ready() -> void:

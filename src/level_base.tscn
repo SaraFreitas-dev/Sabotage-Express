@@ -84,8 +84,9 @@ corner_tile = ExtResource("3_fsv82")
 edge_tile = ExtResource("4_6cjsv")
 normal_tile = ExtResource("5_6umbf")
 
-[node name="Cable_Panel" type="Node2D" parent="." unique_id=1130265675]
+[node name="Cable_Panel" type="Node2D" parent="." unique_id=1130265675 node_paths=PackedStringArray("tiles_grid")]
 script = ExtResource("6_bvd22")
+tiles_grid = NodePath("../Tiles_grid")
 
 [node name="Panel_BG" type="Sprite2D" parent="Cable_Panel" unique_id=1128777898]
 scale = Vector2(0.7, 0.729)

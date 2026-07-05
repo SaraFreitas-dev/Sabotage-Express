@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cyol1gn67mo1x"]
+
+[ext_resource type="Script" uid="uid://bdvlrn4o3662e" path="res://src/cable_pieces.gd" id="1_5nwr0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_igemj"]
+
+[node name="CablePiece" type="Area2D" unique_id=628610529]
+script = ExtResource("1_5nwr0")
+
+[node name="Cable_IMG" type="Sprite2D" parent="." unique_id=542589512]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1944809918]
+shape = SubResource("RectangleShape2D_igemj")

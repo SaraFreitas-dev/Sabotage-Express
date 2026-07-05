@@ -44,6 +44,7 @@ func load_level(level_number: int) -> void:
 	# Center / Add the elements
 	tiles_grid.build_grid(grid_width, grid_height)
 	cables_panel.align_with_grid(tiles_grid)
+	cables_panel.setup_hand(level_data["pieces"])  # TUBES
 	honey_badger.align_with_grid(tiles_grid)
 	timer_panel.start_countdown(level_data["time_limit"])
 	

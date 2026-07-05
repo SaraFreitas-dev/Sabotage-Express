@@ -8,8 +8,8 @@
 	  "dynamite_exit": [8, 3],
 	  "blocked_cells": [[1, 3]],
 	  "pieces": {
-		"straight": { "image": "res://assets/pieces/straight.png", "amount": 3 },
-		"elbow":    { "image": "res://assets/pieces/elbow.png", "amount": 2 }
+		"straight": { "image": "res://Images/tubes/straight.jpeg", "amount": 3 },
+		"elbow":    { "image": "res://Images/tubes/elbow.jpeg", "amount": 2 }
 	  },
 	  "refreshes": 1
 	},
