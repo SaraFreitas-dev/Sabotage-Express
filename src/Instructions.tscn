@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dy5qbcs8fd4x6"]
+
+[ext_resource type="Texture2D" uid="uid://ck30x8hcsnswi" path="res://Images/Instructions/Instructions_big.png" id="1_s1geb"]
+[ext_resource type="Script" uid="uid://bhfp4a6yl4541" path="res://src/instructions.gd" id="1_yxyos"]
+
+[node name="Instructions" type="Node2D" unique_id=402637003]
+script = ExtResource("1_yxyos")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2100770645]
+position = Vector2(638.1381, 365.375)
+scale = Vector2(0.7749734, 0.77497345)
+texture = ExtResource("1_s1geb")

@@ -4,7 +4,7 @@ extends Node2D
 @export var speed: float = 80.0
 var moving: bool = false
 var start_position: Vector2
-var trigger_time: float = 10.0
+var trigger_time: float = 12.0
 var has_triggered: bool = false
 
 func _ready():

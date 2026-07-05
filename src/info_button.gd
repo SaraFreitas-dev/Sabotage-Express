@@ -1,6 +1,10 @@
 extends TextureButton
 
 
+@onready var instructions_scene := preload("res://src/Instructions.tscn")
+var instructions_instance: Node = null
+
+
 func _ready():
 	pressed.connect(_on_pressed)
 	mouse_entered.connect(_on_hover)
@@ -8,7 +12,9 @@ func _ready():
 
 
 func _on_pressed():
-	pass
+	if instructions_instance == null:
+		instructions_instance = instructions_scene.instantiate()
+		add_child(instructions_instance)
 
 func _on_hover():
 	var tween = create_tween()
