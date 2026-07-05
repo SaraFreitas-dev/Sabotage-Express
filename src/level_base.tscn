@@ -28,6 +28,13 @@
 [ext_resource type="Script" uid="uid://cpx48nlufu22r" path="res://src/timer_panel.gd" id="26_0oqr6"]
 [ext_resource type="Texture2D" uid="uid://ppw7m3d270ia" path="res://Images/banners_and_tools/Time_Panel.png" id="27_n5y8f"]
 [ext_resource type="FontFile" uid="uid://dbg54fedpawpb" path="res://Images/text_fonts/Rye-Regular.ttf" id="28_n5y8f"]
+[ext_resource type="Script" uid="uid://deuf23omxeo2k" path="res://src/pipe_logic/main.gd" id="29_2nqba"]
+[ext_resource type="PackedScene" uid="uid://b7guymjxdtd14" path="res://src/pipe_logic/pipe.tscn" id="30_1ww66"]
+[ext_resource type="Texture2D" uid="uid://c0x4m24erq5ql" path="res://Images/cable/Straight.png" id="31_1ww66"]
+[ext_resource type="Texture2D" uid="uid://cwik7llmmmw7x" path="res://Images/cable/Curve.png" id="32_jnvur"]
+[ext_resource type="Texture2D" uid="uid://c2bjxw6qu3riq" path="res://Images/cable/Cross.png" id="33_05nsx"]
+[ext_resource type="Texture2D" uid="uid://1dquqssmirjb" path="res://Images/cable/T.png" id="34_7aww7"]
+[ext_resource type="Texture2D" uid="uid://cetya0f5rh60t" path="res://Images/cable/Termination.png" id="35_v1j4w"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fv6mk"]
 animations = [{
@@ -214,3 +221,12 @@ theme_override_fonts/font = ExtResource("28_n5y8f")
 theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Main" type="Node2D" parent="." unique_id=1187069927]
+script = ExtResource("29_2nqba")
+pipe_scene = ExtResource("30_1ww66")
+tex_straight = ExtResource("31_1ww66")
+tex_curve = ExtResource("32_jnvur")
+tex_cross = ExtResource("33_05nsx")
+tex_t = ExtResource("34_7aww7")
+tex_termination = ExtResource("35_v1j4w")

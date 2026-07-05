@@ -11,6 +11,7 @@ extends Node
 @onready var timer_panel := get_tree().current_scene.get_node("UI/Timer_Panel")
 @onready var honey_badger := get_tree().current_scene.get_node("Honey_Badger")
 @onready var dynamite := get_tree().current_scene.get_node("Dynamite")
+
 var current_level_data: Dictionary = {}
 
 
@@ -50,6 +51,14 @@ func load_level(level_number: int) -> void:
 	# Get the dinamite pos
 	var dynamite_pos: Array = level_data["dynamite_exit"]
 	dynamite.align_with_grid(tiles_grid, Vector2i(dynamite_pos[0], dynamite_pos[1]))
+	
+	# CHAME O CREATE BOARD DO MAIN PASSANDO OS DADOS
+	var main_game = get_tree().current_scene.get_node("Main")
+	
+	if main_game and main_game.has_method("create_board"):
+		main_game.create_board(level_data)
+	else:
+		push_error("ERRO: Nó Main não encontrado ou o script main.gd não está anexado nele!")
 
 	print("Loaded level: ", level_number)
 	print("Grid size: ", grid_width, " x ", grid_height)
@@ -57,7 +66,7 @@ func load_level(level_number: int) -> void:
 	print("Detonator entry: ", level_data["detonator_entry"])
 	print("Dynamite exit: ", level_data["dynamite_exit"])
 	print("Blocked cells: ", level_data["blocked_cells"])
-	print("Pieces: ", level_data["pieces"])
+	print("Fixed Pieces: ", level_data["fixed_pieces"])
 	print("Refreshes: ", level_data["refreshes"])
 
 
