@@ -105,6 +105,7 @@ autoplay = "honey_badger_detonator"
 frame_progress = 0.5880668
 
 [node name="Train" type="Node2D" parent="." unique_id=517424086]
+z_index = 1
 script = ExtResource("6_h23so")
 debug_force_show = true
 
@@ -185,18 +186,18 @@ script = ExtResource("17_8fado")
 light_mask = 2
 visibility_layer = 2
 layout_mode = 3
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_top = 50.0
-offset_bottom = 50.0
+anchor_left = 0.022
+anchor_top = -0.01
+anchor_right = 1.0
+anchor_bottom = 0.1
 grow_horizontal = 2
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.35, 0.35)
 size_flags_horizontal = 4
 script = ExtResource("26_0oqr6")
 
 [node name="Plank_Sprite" type="Sprite2D" parent="UI/Timer_Panel" unique_id=1946298398]
 texture = ExtResource("27_n5y8f")
+centered = false
 
 [node name="Time_Label" type="Label" parent="UI/Timer_Panel" unique_id=810649271]
 layout_mode = 1
@@ -205,12 +206,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_right = 1.0
-offset_bottom = 51.0
+offset_left = -576.64
+offset_top = -4.6799984
+offset_right = -575.64
+offset_bottom = 96.32
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("28_n5y8f")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 80
 horizontal_alignment = 1
 vertical_alignment = 1
