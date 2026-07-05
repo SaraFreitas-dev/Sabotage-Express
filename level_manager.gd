@@ -43,6 +43,15 @@ func load_level(level_number: int) -> void:
 
 	# Center / Add the elements
 	tiles_grid.build_grid(grid_width, grid_height)
+	
+		# Define os pontos de entrada e saída para a lógica de vitória
+	var entry_pos: Array = level_data["detonator_entry"]
+	var exit_pos: Array = level_data["dynamite_exit"]
+	tiles_grid.set_endpoints(
+		Vector2i(int(entry_pos[0]), int(entry_pos[1])),
+		Vector2i(int(exit_pos[0]), int(exit_pos[1]))
+	)
+
 	cables_panel.align_with_grid(tiles_grid)
 	cables_panel.setup_hand(level_data["pieces"])  # TUBES
 	honey_badger.align_with_grid(tiles_grid)

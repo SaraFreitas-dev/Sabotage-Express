@@ -60,7 +60,7 @@ func _process(delta):
 	if time_remaining <= danger_threshold:
 		if not danger_active:
 			danger_active = true
-			train_sound.play()  # toca uma vez ao entrar em perigo (ou usa loop, ve nota abaixo)
+			train_sound.play()  # Plays once
 		_apply_danger_effect()
 	else:
 		time_label.modulate = NORMAL_COLOR
@@ -83,7 +83,7 @@ func _apply_danger_effect():
 	)
 	
 	time_label.position = TIMER_LABEL_POSITION + shake_offset
-	plank_sprite.position = PLANK_BASE_POSITION + shake_offset * 0.5  # tremor mais subtil que o texto
+	plank_sprite.position = PLANK_BASE_POSITION + shake_offset * 0.2  # shake smaller than the text
 
 func _on_time_expired():
 	var train = get_tree().current_scene.get_node("Train")

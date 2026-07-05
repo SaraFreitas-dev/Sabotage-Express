@@ -1,15 +1,12 @@
-# Make the panel centered to the right of the grid's position
 extends Node2D
-
 @export var panel_gap: float = 30.0
 @export var panel_width: float = 200.0
 @export var tiles_grid: Node2D
-
 const PIECE_SCENE := preload("res://src/cable_piece.tscn")
 const HAND_SIZE := 3
 const SLOT_SPACING := 70.0
-
 var pieces_data: Dictionary = {}
+var original_pieces_data: Dictionary = {}
 var current_hand: Array = []
 
 func align_with_grid(grid: Node2D) -> void:
@@ -24,6 +21,7 @@ func align_with_grid(grid: Node2D) -> void:
 
 func setup_hand(pieces: Dictionary) -> void:
 	pieces_data = pieces.duplicate(true)
+	original_pieces_data = pieces.duplicate(true)
 	_clear_hand()
 	_fill_hand()
 
@@ -34,7 +32,9 @@ func _clear_hand() -> void:
 	current_hand.clear()
 
 func _fill_hand() -> void:
-	while current_hand.size() < HAND_SIZE and _has_pieces_left():
+	while current_hand.size() < HAND_SIZE:
+		if not _has_pieces_left():
+			_refill_pieces_data()
 		_spawn_random_piece()
 	_reposition_hand()
 
@@ -63,15 +63,23 @@ func _spawn_random_piece() -> void:
 	pieces_data[chosen_type]["amount"] -= 1
 	current_hand.append(piece)
 
+func _refill_pieces_data() -> void:
+	pieces_data = original_pieces_data.duplicate(true)
 
-# Center the cable pieces in the panel
 func _reposition_hand() -> void:
 	var count := current_hand.size()
 	var start_y := -(count - 1) * SLOT_SPACING / 2.0
 	for i in range(count):
 		current_hand[i].position = Vector2(0, start_y + i * SLOT_SPACING)
-		
-		
+
 func on_piece_placed(piece: Node) -> void:
 	current_hand.erase(piece)
 	_fill_hand()
+	
+	if tiles_grid.check_win():
+		on_win()
+
+func on_win() -> void:
+	var dynamite = get_tree().current_scene.get_node("Dynamite")
+	var explosion = get_tree().current_scene.get_node("Explosion")  # ajusta o nome se for diferente
+	explosion.play_explosion(dynamite.global_position)
