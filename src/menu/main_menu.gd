@@ -13,7 +13,7 @@ extends Control
 ## Flow: open the game -> this menu shows -> press "Play" -> the first phase
 ## of the main game (level_base.tscn) loads.
 
-const FIRST_LEVEL_SCENE := "res://src/level_base.tscn"
+const FIRST_LEVEL_SCENE := "res://src/StoryIntro.tscn"
 const CUSTOM_CURSOR: Texture2D = preload("res://Images/menu/mouse.png")
 
 @onready var start_button: Button = $StartButton

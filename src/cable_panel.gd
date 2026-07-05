@@ -9,6 +9,8 @@ var pieces_data: Dictionary = {}
 var original_pieces_data: Dictionary = {}
 var current_hand: Array = []
 
+@onready var place_sound: AudioStreamPlayer = $"../Add_Cable"
+
 func align_with_grid(grid: Node2D) -> void:
 	var grid_size: Vector2 = grid.get_grid_size()
 	var grid_left: float = grid.global_position.x
@@ -73,6 +75,7 @@ func _reposition_hand() -> void:
 		current_hand[i].position = Vector2(0, start_y + i * SLOT_SPACING)
 
 func on_piece_placed(piece: Node) -> void:
+	place_sound.play()
 	current_hand.erase(piece)
 	_fill_hand()
 	

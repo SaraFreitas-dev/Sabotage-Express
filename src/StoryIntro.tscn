@@ -1,3 +1,19 @@
 [gd_scene format=3 uid="uid://dubvgx2lx7lim"]
 
+[ext_resource type="Script" uid="uid://1kxmeo7sgq7b" path="res://src/story_intro.gd" id="1_6b04o"]
+[ext_resource type="Texture2D" uid="uid://diy622jocuhvj" path="res://Images/Instructions/storyline.jpeg" id="2_2x6we"]
+[ext_resource type="AudioStream" uid="uid://b5mc5xodmx7qw" path="res://music/intro_story.wav" id="3_1p0yc"]
+
 [node name="StoryIntro" type="Node2D" unique_id=1009206540]
+position = Vector2(0, -10)
+script = ExtResource("1_6b04o")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1524812350]
+offset_top = -10.0
+offset_right = 1672.0
+offset_bottom = 931.0
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_2x6we")
+
+[node name="Narration" type="AudioStreamPlayer" parent="." unique_id=951616487]
+stream = ExtResource("3_1p0yc")
