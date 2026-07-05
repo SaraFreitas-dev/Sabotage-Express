@@ -11,14 +11,17 @@ var danger_active: bool = false
 
 const TIMER_LABEL_POSITION := Vector2(155, 180)
 const TIMER_LABEL_SIZE := Vector2(1, 1)
-const PLANK_BASE_POSITION := Vector2.ZERO  # ajusta se o Plank_Sprite nao estiver em (0,0)
+const PLANK_BASE_POSITION := Vector2.ZERO 
 
 const NORMAL_COLOR = Color(0.05, 0.05, 0.05)
 const DANGER_COLOR = Color(0.8, 0.1, 0.1)
 
+
+
 func _ready() -> void:
 	setup_label()
 
+ 
 func setup_label() -> void:
 	time_label.position = TIMER_LABEL_POSITION
 	time_label.size = TIMER_LABEL_SIZE

@@ -28,6 +28,7 @@
 [ext_resource type="Script" uid="uid://cpx48nlufu22r" path="res://src/timer_panel.gd" id="26_0oqr6"]
 [ext_resource type="Texture2D" uid="uid://ppw7m3d270ia" path="res://Images/banners_and_tools/Time_Panel.png" id="27_n5y8f"]
 [ext_resource type="FontFile" uid="uid://dbg54fedpawpb" path="res://Images/text_fonts/Rye-Regular.ttf" id="28_n5y8f"]
+[ext_resource type="PackedScene" uid="uid://c756wjljjg6sm" path="res://src/explosion.tscn" id="29_2nqba"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fv6mk"]
 animations = [{
@@ -121,6 +122,7 @@ animation = &"Train_moving"
 autoplay = "Train_moving"
 
 [node name="Music_Player" type="AudioStreamPlayer2D" parent="." unique_id=2041318613]
+process_mode = 3
 stream = SubResource("AudioStreamWAV_n5y8f")
 autoplay = true
 
@@ -227,3 +229,5 @@ theme_override_fonts/font = ExtResource("28_n5y8f")
 theme_override_font_sizes/font_size = 80
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Explosion" parent="." unique_id=1629515165 instance=ExtResource("29_2nqba")]
