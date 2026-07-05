@@ -15,23 +15,93 @@
 [ext_resource type="Script" uid="uid://cx0rleqkmyvcg" path="res://src/music_button.gd" id="9_fsv82"]
 [ext_resource type="Texture2D" uid="uid://jorkmjnpdnd3" path="res://Images/banners_and_tools/music_button.png" id="10_6cjsv"]
 [ext_resource type="Script" uid="uid://6h5jv6q5irh4" path="res://src/honey_badger.gd" id="11_avtfv"]
+[ext_resource type="Texture2D" uid="uid://dillwc0icg4tq" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/1.png" id="11_e3n2i"]
 [ext_resource type="Texture2D" uid="uid://bap43o76f1sa3" path="res://Images/banners_and_tools/Info_Button.png" id="12_dlm8i"]
 [ext_resource type="Texture2D" uid="uid://ctdb5jjjoi0ei" path="res://Images/banners_and_tools/Menu_Button.png" id="13_bygqa"]
 [ext_resource type="Script" uid="uid://dvcpbvy7132n2" path="res://src/info_button.gd" id="13_kuqqc"]
 [ext_resource type="Texture2D" uid="uid://ghmq15gvvb8" path="res://Images/banners_and_tools/Replay_Button.png" id="14_ax5nw"]
+[ext_resource type="Texture2D" uid="uid://bciqbufgqd4t" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/4.png" id="14_pclgb"]
 [ext_resource type="Script" uid="uid://b6m463j6e1nwv" path="res://src/menu_button.gd" id="15_bvd22"]
+[ext_resource type="Texture2D" uid="uid://c3a56jg053527" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/5.png" id="15_ir6t2"]
 [ext_resource type="Script" uid="uid://cvlbp2prcgt22" path="res://src/replay_button.gd" id="17_8fado"]
+[ext_resource type="Texture2D" uid="uid://cig610i0fd00o" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/7.png" id="17_dr3dc"]
 [ext_resource type="AudioStream" uid="uid://frp2f0uwox38" path="res://music/train_sound.mp3" id="18_2nqba"]
+[ext_resource type="Texture2D" uid="uid://gdc8iktixrlh" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/9.png" id="19_jygha"]
 [ext_resource type="Texture2D" uid="uid://d1epqbmrobgkh" path="res://Images/Characters/Honey_Badger/honey_badger_waiting/waiting_10.png" id="20_31wlx"]
 [ext_resource type="Texture2D" uid="uid://burxrhpeu3vkl" path="res://Images/Characters/Honey_Badger/honey_badger_waiting/waiting_11.png" id="21_dr3dc"]
+[ext_resource type="Texture2D" uid="uid://hkt8s4soe72s" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/11.png" id="21_lwhdn"]
+[ext_resource type="Texture2D" uid="uid://c4lcghkkh7fku" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/12.png" id="22_5j55o"]
 [ext_resource type="Texture2D" uid="uid://ksv2dm53vgc1" path="res://Images/Characters/Honey_Badger/honey_badger_waiting/waiting_12.png" id="22_7yf8p"]
+[ext_resource type="Texture2D" uid="uid://cukr6sldyoomd" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/14.png" id="24_8vvgp"]
 [ext_resource type="Script" uid="uid://cpx48nlufu22r" path="res://src/timer_panel.gd" id="26_0oqr6"]
+[ext_resource type="Texture2D" uid="uid://ctf1thaakbhut" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/16.png" id="26_ucbks"]
+[ext_resource type="Texture2D" uid="uid://cj2ncaupolexa" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/17.png" id="27_c3c5m"]
 [ext_resource type="Texture2D" uid="uid://ppw7m3d270ia" path="res://Images/banners_and_tools/Time_Panel.png" id="27_n5y8f"]
 [ext_resource type="FontFile" uid="uid://dbg54fedpawpb" path="res://Images/text_fonts/Rye-Regular.ttf" id="28_n5y8f"]
 [ext_resource type="PackedScene" uid="uid://c756wjljjg6sm" path="res://src/explosion.tscn" id="29_2nqba"]
+[ext_resource type="Texture2D" uid="uid://cgs8eby1ykfnm" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/19.png" id="29_ikov3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fv6mk"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_e3n2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_e3n2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_pclgb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_ir6t2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_dr3dc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_jygha")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_lwhdn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_5j55o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_ikov3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_8vvgp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_ucbks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_c3c5m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_c3c5m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_ikov3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_ikov3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_ikov3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_dr3dc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_jygha")
+}],
+"loop": 1,
+"name": &"honey_badger_detonator",
+"speed": 3.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("20_31wlx")
@@ -43,7 +113,7 @@ animations = [{
 "texture": ExtResource("22_7yf8p")
 }],
 "loop": 1,
-"name": &"honey_badger_detonator",
+"name": &"honey_badger_playing",
 "speed": 2.0
 }]
 
@@ -106,9 +176,7 @@ script = ExtResource("11_avtfv")
 [node name="badger_animation" type="AnimatedSprite2D" parent="Honey_Badger" unique_id=990882896]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_fv6mk")
-animation = &"honey_badger_detonator"
-autoplay = "honey_badger_detonator"
-frame = 2
+animation = &"honey_badger_playing"
 
 [node name="Train" type="Node2D" parent="." unique_id=517424086]
 z_index = 1

@@ -80,6 +80,28 @@ func on_piece_placed(piece: Node) -> void:
 		on_win()
 
 func on_win() -> void:
-	var dynamite = get_tree().current_scene.get_node("Dynamite")
-	var explosion = get_tree().current_scene.get_node("Explosion")  # ajusta o nome se for diferente
+	var level = get_tree().current_scene
+	var timer_panel = level.get_node("UI/Timer_Panel")
+	var train = level.get_node("Train")
+	var train_sounds = level.get_node("Train_Sounds")
+	var honey_badger = level.get_node("Honey_Badger")
+	var explosion = level.get_node("Explosion")
+	var dynamite = level.get_node("Dynamite")
+	
+	# Stop the timer so it doesn't keep counting during the win sequence
+	timer_panel.is_running = false
+	
+	# If the train hasn't arrived yet, force it to appear now
+	if timer_panel.time_remaining > 10.0:
+		train_sounds.play()
+		await get_tree().create_timer(2.0).timeout
+		train.show_train()
+		train.start_moving()
+		await get_tree().create_timer(1.2).timeout
+	
+	# Switch Honey Badger to the detonate animation
+	honey_badger.play_detonate_animation()
+	await honey_badger.detonate_finished
+	
+	# Only explode after Honey Badger "presses the button"
 	explosion.play_explosion(dynamite.global_position)
