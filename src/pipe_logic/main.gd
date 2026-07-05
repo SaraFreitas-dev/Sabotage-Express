@@ -12,16 +12,20 @@ const Pipe = preload("res://src/pipe_logic/pipe.gd")
 @export var wood_texture: Texture2D
 @export var grid_manual_offset: Vector2 = Vector2(0, 0)
 @export var pipe_scale: Vector2 = Vector2(0.57, 0.57)
+@export var manual_offset_x: float = 0.0
+@export var manual_offset_y: float = 0.0
+
+const OBSTACLE = "blocked"
 
 var pipe_scene_loaded
 var grid: Array = []
-var cell_size: int = 84
+var cell_size: int = 70
 var offset_x: float = 0
 var offset_y: float = 0
 
 # ---- Inventário ----
-var inventory_pieces: Array = [3, 4, 7]
-var upcoming_pieces: Array = [3, 3, 4, 3, 4, 3, 4]
+var inventory_pieces: Array = []
+var upcoming_pieces: Array = []
 var inventory_slots: Array = []
 var inventory_instances: Array = []
 var is_dragging_from_inventory: bool = false
@@ -210,6 +214,18 @@ func _print_grid_state() -> void:
 	print("===================")
 
 func create_board(level_data: Dictionary) -> void:
+	var detonator_pos = [int(level_data["detonator_entry"][0]), int(level_data["detonator_entry"][1])]
+	var dynamite_pos = [int(level_data["dynamite_exit"][0]), int(level_data["dynamite_exit"][1])]
+	# --- LIMPEZA DE SEGURANÇA ---
+	if level_data.is_empty():
+		push_error("ERRO: level_data chegou vazio no create_board!")
+		return
+
+	for child in get_children():
+		if child.has_method("set_pipe_data"): # Remove apenas os Pipes
+			child.queue_free()
+	inventory_pieces = level_data.get("inventory_pieces", [])
+	upcoming_pieces = level_data.get("upcoming_pieces", [])
 	# 1. Obter dados do nível
 	var size: Array = level_data["size"]
 	var grid_width: int = int(size[0])
@@ -232,9 +248,6 @@ func create_board(level_data: Dictionary) -> void:
 	offset_y = (screen_size.y - total_height) / 2.0
 	
 	pipe_scene_loaded = load("res://src/pipe_logic/pipe.tscn")
-	
-	var detonator_pos = level_data["detonator_entry"]
-	var dynamite_pos = level_data["dynamite_exit"]
 
 	# 4. Criar matriz lógica baseada no tamanho do JSON
 	for y in range(grid_height):
@@ -243,30 +256,26 @@ func create_board(level_data: Dictionary) -> void:
 			# Verifica se a célula está bloqueada
 			var is_blocked = false
 			for blocked in level_data["blocked_cells"]:
-				if blocked[0] == x and blocked[1] == y:
+				if int(blocked[0]) == x and int(blocked[1]) == y:
 					is_blocked = true
 					break
 			
 			if is_blocked:
-				grid[y].append(null) # Ou coloque um objeto de "Obstáculo"
+				grid[y].append(OBSTACLE) # Ou coloque um objeto de "Obstáculo"
+				print("Bloqueado adicionado em: ", x, ", ", y)
 				continue
 			
 			if x == detonator_pos[0] and y == detonator_pos[1]:
-				# Tipo 1 = Início (Detonator)
-				var start_pipe = _spawn_fixed_pipe(1, x, y)
-				grid[y].append(start_pipe)
+				grid[y].append(_spawn_fixed_pipe({"type": 1, "rotation": 0}, x, y))
 				continue
 				
 			if x == dynamite_pos[0] and y == dynamite_pos[1]:
-				# Tipo 2 = Fim (Dynamite)
-				var end_pipe = _spawn_fixed_pipe(2, x, y)
-				grid[y].append(end_pipe)
+				grid[y].append(_spawn_fixed_pipe({"type": 2, "rotation": 0}, x, y))
 				continue
 			# (Aqui você pode adicionar lógica para peças pré-posicionadas se desejar)
-			var fixed_type = _get_fixed_piece_type_at(x, y, level_data)
-			if fixed_type != 0:
-				var new_fixed = _spawn_fixed_pipe(fixed_type, x, y)
-				new_fixed.visible = true 
+			var piece_data = _get_fixed_piece_data_at(x, y, level_data)
+			if not piece_data.is_empty():
+				var new_fixed = _spawn_fixed_pipe(piece_data, x, y)
 				grid[y].append(new_fixed)
 				continue
 			# 👆 FIM DA LÓGICA DE PEÇAS FIXAS 👆
@@ -297,8 +306,8 @@ func _on_pipe_rotated() -> void:
 
 func create_inventory() -> void:
 	# 1. Defina posições fixas (ajuste os valores conforme necessário para a sua placa)
-	var inventory_start_x = 1100 
-	var inventory_start_y = 300
+	var inventory_start_x = 1086 
+	var inventory_start_y = 335
 	
 	# 2. Limpa inventário anterior se necessário
 	inventory_instances.clear()
@@ -313,7 +322,7 @@ func create_inventory() -> void:
 		
 		# Posição baseada no início da placa
 		var x_pos = inventory_start_x
-		var y_pos = inventory_start_y + (i * cell_size)
+		var y_pos = inventory_start_y + (i * (cell_size * 1.1))
 		
 		# Atribuições corretas usando a variável definida acima
 		new_pipe.type = piece_type
@@ -379,12 +388,10 @@ func _finish_drag(piece: Pipe) -> void:
 	var mouse_pos = get_global_mouse_position()
 	var new_grid_pos = _global_to_grid(mouse_pos)
 
-	var can_place = false
-	if new_grid_pos.x >= 0 and new_grid_pos.x < grid[0].size() and \
-	   new_grid_pos.y >= 0 and new_grid_pos.y < grid.size():
-		if grid[new_grid_pos.y][new_grid_pos.x] == null:
-			can_place = true
+	# Aqui nós definimos o valor de can_place
+	var can_place = _is_cell_available(new_grid_pos)
 
+	# Agora usamos essa variável UMA ÚNICA VEZ
 	if can_place:
 		_place_piece_at(piece, new_grid_pos)
 	else:
@@ -408,7 +415,7 @@ func _start_drag_from_inventory(index: int) -> void:
 	drag_inventory_index = index
 	drag_offset = get_global_mouse_position() - piece.global_position
 	
-	piece.z_index = 10
+	piece.z_index = 100	
 	var root = get_tree().current_scene
 	remove_child(piece)
 	root.add_child(piece)
@@ -424,26 +431,21 @@ func _finish_drag_from_inventory() -> void:
 	
 	var mouse_pos = get_global_mouse_position()
 	var new_grid_pos = _global_to_grid(mouse_pos)
+	print("Tentando soltar peça em grid: ", new_grid_pos, " Mouse global: ", mouse_pos)
 	
-	var can_place = false
-	if new_grid_pos.x >= 0 and new_grid_pos.x < grid[0].size() and \
-	   new_grid_pos.y >= 0 and new_grid_pos.y < grid.size():
-		if grid[new_grid_pos.y][new_grid_pos.x] == null:
-			can_place = true
+	# Aqui definimos o valor de can_place
+	var can_place = _is_cell_available(new_grid_pos)
 	
+	# Usamos apenas uma vez:
 	if can_place:
 		_place_piece_at(piece, new_grid_pos)
 		
-		# --- SISTEMA DE REPOSIÇÃO (NOVO) ---
+		# --- SISTEMA DE REPOSIÇÃO ---
 		if upcoming_pieces.size() > 0:
-			# Pega a próxima peça da fila e remove ela da lista (pop_front)
 			var next_piece_type = upcoming_pieces.pop_front()
 			_spawn_new_inventory_piece(next_piece_type, drag_inventory_index)
 		else:
-			# Se a fila acabou, o espaço fica vazio de vez
 			inventory_instances[drag_inventory_index] = null
-		# -----------------------------------
-		
 	else:
 		_restore_inventory_piece(piece, drag_inventory_index)
 	
@@ -472,7 +474,10 @@ func _restore_piece(piece: Pipe, grid_pos: Vector2i) -> void:
 		var root = get_tree().current_scene
 		root.remove_child(piece)
 		add_child(piece)
-	piece.position = Vector2(grid_pos.x * cell_size + offset_x, grid_pos.y * cell_size + offset_y)
+	piece.position = Vector2(
+		grid_pos.x * cell_size + offset_x + (cell_size / 2.0) + manual_offset_x, 
+		grid_pos.y * cell_size + offset_y + (cell_size / 2.0) + manual_offset_y
+	)
 	piece.z_index = 0
 	grid[grid_pos.y][grid_pos.x] = piece
 
@@ -484,20 +489,34 @@ func _find_pipe_grid_position(piece: Pipe) -> Vector2i:
 	return Vector2i(-1, -1)
 
 func _global_to_grid(global_pos: Vector2) -> Vector2i:
-	var x = round((global_pos.x - offset_x) / cell_size)
-	var y = round((global_pos.y - offset_y) / cell_size)
+	var x = floor((global_pos.x - offset_x) / cell_size)
+	var y = floor((global_pos.y - offset_y) / cell_size)
 	return Vector2i(x, y)
 
 func _place_piece_at(piece: Pipe, grid_pos: Vector2i) -> void:
+	# 1. Ajuste a hierarquia
 	if piece.get_parent() != self:
 		var root = get_tree().current_scene
-		root.remove_child(piece)
+		if piece.get_parent(): piece.get_parent().remove_child(piece)
 		add_child(piece)
 	
-	piece.position = Vector2(grid_pos.x * cell_size + offset_x, grid_pos.y * cell_size + offset_y)
+	# 2. Cálculo de posição
+	var world_pos = Vector2(
+		grid_pos.x * cell_size + offset_x + (cell_size / 2.0) + manual_offset_x, 
+		grid_pos.y * cell_size + offset_y + (cell_size / 2.0) + manual_offset_y
+	)
+	
+	piece.position = world_pos
 	piece.z_index = 0
+	piece.visible = true # FORÇAR VISIBILIDADE
+	
+	# 3. Atualiza o grid
 	grid[grid_pos.y][grid_pos.x] = piece
 	
+	# 4. Debug visual
+	print("Peça posicionada no grid ", grid_pos, " em World: ", world_pos)
+	
+	# 5. Limpa inventário
 	for i in range(inventory_instances.size()):
 		if inventory_instances[i] == piece:
 			inventory_instances[i] = null
@@ -608,24 +627,70 @@ func _activate_bomb() -> void:
 	label.add_theme_color_override("font_color", Color.RED)
 	add_child(label)
 
-func _spawn_fixed_pipe(piece_type: int, grid_x: int, grid_y: int) -> Pipe:
+func _spawn_fixed_pipe(data, grid_x: int, grid_y: int) -> Pipe:
 	var new_pipe = pipe_scene_loaded.instantiate()
 	add_child(new_pipe)
-	
-	# Calcula a posição exata baseada nas coordenadas x e y da matriz
 	new_pipe.is_fixed = true
 	
-	new_pipe.position = Vector2(grid_x * cell_size + offset_x + (cell_size / 2.0), 
-								grid_y * cell_size + offset_y + (cell_size / 2.0))
+	var tiles_grid = get_tree().current_scene.get_node("Tiles_grid")
+	new_pipe.global_position = tiles_grid.grid_to_world(grid_x, grid_y)
 
-	new_pipe.type = piece_type
+	# SEGURANÇA: Verifica se 'data' é um Dictionary antes de acessar
+	var p_type = 0
+	var p_rot = 0
+	
+	if typeof(data) == TYPE_DICTIONARY:
+		p_type = data.get("type", 0)
+		p_rot = data.get("rotation", 0)
+	elif typeof(data) == TYPE_INT:
+		p_type = data # Caso ainda esteja vindo um número solto de algum lugar
+	
+	new_pipe.type = p_type
 	new_pipe.scale = pipe_scale
 	
-	if piece_type in [1, 2]:
-		new_pipe.visible = true
+	# Aplica rotação
+	for i in range(p_rot):
+		new_pipe.rotate_pipe_clockwise()
 	
-	var texture = _get_texture_for_type(piece_type)
-	var base_connections = _get_base_connections(piece_type)
+	# Configura dados visuais
+	new_pipe.visible = true
+	var texture = _get_texture_for_type(p_type)
+	var base_connections = _get_base_connections(p_type)
 	new_pipe.set_pipe_data(texture, base_connections)
 	
 	return new_pipe
+
+func _get_fixed_piece_data_at(x: int, y: int, level_data: Dictionary) -> Dictionary:
+	if not level_data.has("fixed_pieces"):
+		return {} # Retorna vazio se não houver peça
+		
+	for piece in level_data["fixed_pieces"]:
+		if int(piece["x"]) == x and int(piece["y"]) == y:
+			return piece
+	return {} # Retorna vazio se não encontrar
+
+func _is_cell_available(grid_pos: Vector2i) -> bool:
+	# 1. Verifica limites
+	if grid_pos.x < 0 or grid_pos.x >= grid[0].size() or \
+	   grid_pos.y < 0 or grid_pos.y >= grid.size():
+		return false
+	
+	var content = grid[grid_pos.y][grid_pos.x]
+	
+	# 2. Se for null, está livre
+	if content == null:
+		return true
+	
+	if content == "BLOCK":
+		return false # Impede colocar peça em local bloqueado
+		
+	# 3. SE NÃO FOR NULL, vamos investigar o que tem ali
+	print("Tentando colocar peça em: ", grid_pos, " mas o conteúdo é: ", content)
+	
+	# Se for uma peça fixa, não podemos colocar nada
+	if content.has_method("is_fixed") and content.is_fixed == true:
+		print("Bloqueado: Peça fixa em ", grid_pos)
+		return false
+		
+	# Se for um obstáculo (você pode verificar se é um Node ou algo específico)
+	return false

@@ -2,7 +2,7 @@
 extends Node2D
 
 func align_with_grid(tiles_grid: Node2D, target_cell: Vector2i) -> void:
-	position = tiles_grid.grid_to_world(target_cell.x, target_cell.y)
+	global_position = tiles_grid.grid_to_world(target_cell.x, target_cell.y)
 	
 	var target_size := 95.0
 	var sprite: Sprite2D = $Dynamite_Img
