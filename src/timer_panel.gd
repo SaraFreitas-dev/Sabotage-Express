@@ -2,12 +2,12 @@ extends Control
 
 @onready var time_label: Label = $Time_Label
 @onready var plank_sprite: Sprite2D = $Plank_Sprite
-@onready var danger_sound: AudioStreamPlayer = $DangerSound
+@onready var train_sound: AudioStreamPlayer2D = $"../../Train_Sounds"
 
 var time_remaining: float = 0.0
 var is_running: bool = false
-var danger_threshold: float = 11.0
-var danger_active: bool = false  # para saber quando ACABOU de entrar em perigo (disparar som só 1 vez)
+var danger_threshold: float = 16.0
+var danger_active: bool = false
 
 const TIMER_LABEL_POSITION := Vector2(155, 180)
 const TIMER_LABEL_SIZE := Vector2(1, 1)
@@ -33,6 +33,8 @@ func start_countdown(seconds: float):
 	time_label.position = TIMER_LABEL_POSITION
 	plank_sprite.position = PLANK_BASE_POSITION
 	update_label()
+	var train = get_tree().current_scene.get_node("Train")
+	train.reset()
 
 func _process(delta):
 	if not is_running:
@@ -46,7 +48,7 @@ func _process(delta):
 		update_label()
 		time_label.position = TIMER_LABEL_POSITION
 		plank_sprite.position = PLANK_BASE_POSITION
-		danger_sound.stop()
+		train_sound.stop()
 		_on_time_expired()
 		return
 	
@@ -55,7 +57,7 @@ func _process(delta):
 	if time_remaining <= danger_threshold:
 		if not danger_active:
 			danger_active = true
-			danger_sound.play()  # toca uma vez ao entrar em perigo (ou usa loop, ve nota abaixo)
+			train_sound.play()  # toca uma vez ao entrar em perigo (ou usa loop, ve nota abaixo)
 		_apply_danger_effect()
 	else:
 		time_label.modulate = NORMAL_COLOR
