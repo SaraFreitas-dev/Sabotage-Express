@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://cd6qrkdqk4npp"]
 
 [ext_resource type="Texture2D" uid="uid://5pfbw25g5ou3" path="res://Images/Background/bg2.png" id="1_hmvch"]
+[ext_resource type="Script" uid="uid://uf846a2jlyo5" path="res://src/level_base.gd" id="1_ornsw"]
 [ext_resource type="Script" uid="uid://dpvf2v6h2ptep" path="res://src/tiles_grid.gd" id="2_8epqt"]
 [ext_resource type="Texture2D" uid="uid://dulgfk58rgt5m" path="res://Images/floor_tiles/tile_border_corners.png" id="3_fsv82"]
 [ext_resource type="Texture2D" uid="uid://c83xvlsop8ca" path="res://Images/floor_tiles/grid_tile_edge.png" id="4_6cjsv"]
@@ -136,6 +137,7 @@ data = PackedByteArray("cW9hZgAKzBQBAKxEFAAIGAAAAAAAAAAAAAAAAOAAQACw0SmrqmrvqeTT
 format = 3
 
 [node name="level_base" type="Node2D" unique_id=1447306302]
+script = ExtResource("1_ornsw")
 metadata/_edit_lock_ = true
 
 [node name="BG" type="Sprite2D" parent="." unique_id=2036484229]
