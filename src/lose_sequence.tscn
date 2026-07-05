@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://b0xv1cnki1acw"]
+
+[ext_resource type="Script" uid="uid://qtlmejo843q2" path="res://src/lose_sequence.gd" id="1_lose"]
+[ext_resource type="VideoStream" uid="uid://bfouasc7lgn1a" path="res://Images/win_loose/Game_over.ogv" id="2_video"]
+[ext_resource type="Script" uid="uid://bhbos8yv3b3h5" path="res://src/win_popup.gd" id="4_popup"]
+[ext_resource type="Script" uid="uid://bmkr75ojk3avs" path="res://src/quit_button.gd" id="5_quit"]
+[ext_resource type="Script" uid="uid://b0kwm3u17otbv" path="res://src/main_menu_button.gd" id="6_menu"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0h2ny"]
+load_path = "res://.godot/imported/losee.png-7024d4bc03f08033403260a837164fdb.ctex"
+
+[node name="LoseSequence" type="CanvasLayer" unique_id=506954302]
+script = ExtResource("1_lose")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=415337865]
+auto_translate_mode = 1
+stream = ExtResource("2_video")
+expand = true
+
+[node name="LosePopup" type="Sprite2D" parent="." unique_id=1852435460]
+show_behind_parent = true
+position = Vector2(123, 353)
+texture = SubResource("CompressedTexture2D_0h2ny")
+script = ExtResource("4_popup")
+
+[node name="Quit_Button" type="TextureButton" parent="LosePopup" unique_id=1620868202]
+process_mode = 3
+offset_left = -454.0
+offset_top = 162.0
+offset_right = 65.0
+offset_bottom = 258.0
+stretch_mode = 0
+script = ExtResource("5_quit")
+
+[node name="Main_Menu_Button" type="TextureButton" parent="LosePopup" unique_id=921829946]
+process_mode = 3
+offset_left = -420.0
+offset_top = 13.0
+offset_right = 62.0
+offset_bottom = 88.0
+stretch_mode = 0
+script = ExtResource("6_menu")

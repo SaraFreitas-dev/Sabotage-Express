@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://c756wjljjg6sm"]
+
+[ext_resource type="Texture2D" uid="uid://dd62g80oo0u7h" path="res://Images/explosion/explosion_1.png" id="1_h1do6"]
+[ext_resource type="Script" uid="uid://bu8kjfxt8hatj" path="res://src/explosion.gd" id="1_u6xdu"]
+[ext_resource type="Texture2D" uid="uid://bdvh335lwts81" path="res://Images/explosion/explosion_2.png" id="2_u6xdu"]
+[ext_resource type="Texture2D" uid="uid://duq6nafi3vp6p" path="res://Images/explosion/explosion_3.png" id="3_wgvwa"]
+[ext_resource type="Texture2D" uid="uid://4mxopy68fi1b" path="res://Images/explosion/explosion_4.png" id="4_pjfcs"]
+[ext_resource type="AudioStream" uid="uid://fa4meqsswbd5" path="res://music/explosion.mp3" id="6_wgvwa"]
+[ext_resource type="Texture2D" uid="uid://brn7bh2gmaqgd" path="res://Images/win_loose/win_menu.png" id="7_5n8hw"]
+[ext_resource type="Script" uid="uid://bhbos8yv3b3h5" path="res://src/win_popup.gd" id="7_pjfcs"]
+[ext_resource type="Script" uid="uid://b0kwm3u17otbv" path="res://src/main_menu_button.gd" id="9_bdtrm"]
+[ext_resource type="Script" uid="uid://bmkr75ojk3avs" path="res://src/quit_button.gd" id="10_ftxpi"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_igemj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_h1do6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_u6xdu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wgvwa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_pjfcs")
+}],
+"loop": 1,
+"name": &"explosion",
+"speed": 2.5
+}]
+
+[node name="Explosion" type="Node2D" unique_id=1629515165]
+script = ExtResource("1_u6xdu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=460854164]
+sprite_frames = SubResource("SpriteFrames_igemj")
+animation = &"explosion"
+frame_progress = 0.9784285
+
+[node name="Explosion_Sound" type="AudioStreamPlayer" parent="." unique_id=456129712]
+process_mode = 3
+stream = ExtResource("6_wgvwa")
+
+[node name="WinPopup" type="Sprite2D" parent="." unique_id=233748569]
+texture = ExtResource("7_5n8hw")
+script = ExtResource("7_pjfcs")
+
+[node name="Quit_Button" type="TextureButton" parent="WinPopup" unique_id=1066504350]
+process_mode = 3
+offset_left = -462.0
+offset_top = 164.0
+offset_right = 89.0
+offset_bottom = 289.0
+stretch_mode = 0
+script = ExtResource("10_ftxpi")
+
+[node name="Main_Menu_Button" type="TextureButton" parent="WinPopup" unique_id=593581859]
+process_mode = 3
+offset_left = -460.0
+offset_top = 31.0
+offset_right = 99.0
+offset_bottom = 148.0
+stretch_mode = 0
+script = ExtResource("9_bdtrm")
