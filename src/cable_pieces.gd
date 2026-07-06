@@ -60,7 +60,7 @@ func _end_press() -> void:
 		return
 	
 	dragging = false
-	z_index = 0
+	z_index = 2
 	_try_place()
 
 

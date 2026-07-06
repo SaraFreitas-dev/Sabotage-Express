@@ -42,6 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://c756wjljjg6sm" path="res://src/explosion.tscn" id="29_2nqba"]
 [ext_resource type="Texture2D" uid="uid://cgs8eby1ykfnm" path="res://Images/Characters/Honey_Badger/honey_badger_detonator/19.png" id="29_ikov3"]
 [ext_resource type="AudioStream" uid="uid://bspsflnl4iddh" path="res://music/add_cable.mp3" id="30_fqo05"]
+[ext_resource type="PackedScene" uid="uid://b0xv1cnki1acw" path="res://src/lose_sequence.tscn" id="43_cdyac"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fv6mk"]
 animations = [{
@@ -184,7 +185,6 @@ animation = &"honey_badger_playing"
 [node name="Train" type="Node2D" parent="." unique_id=517424086]
 z_index = 1
 script = ExtResource("6_h23so")
-speed = 90.0
 
 [node name="Animated_Train" type="AnimatedSprite2D" parent="Train" unique_id=1777308846]
 position = Vector2(-168.11113, 68)
@@ -306,3 +306,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Explosion" parent="." unique_id=1629515165 instance=ExtResource("29_2nqba")]
+
+[node name="LoseSequence" parent="." unique_id=506954302 instance=ExtResource("43_cdyac")]

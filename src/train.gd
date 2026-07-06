@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var debug_force_show: bool = false
-@export var speed: float = 80.0
+@export var speed: float = 90.0
 var moving: bool = false
 var start_position: Vector2
 var trigger_time: float = 12.0

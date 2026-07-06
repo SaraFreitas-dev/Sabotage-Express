@@ -42,6 +42,7 @@ func start_countdown(seconds: float):
 func _process(delta):
 	if not is_running:
 		return
+
 	
 	time_remaining -= delta
 	
@@ -85,7 +86,18 @@ func _apply_danger_effect():
 	time_label.position = TIMER_LABEL_POSITION + shake_offset
 	plank_sprite.position = PLANK_BASE_POSITION + shake_offset * 0.2  # shake smaller than the text
 
-func _on_time_expired():
-	var train = get_tree().current_scene.get_node("Train")
+
+func _on_time_expired() -> void:
+	print("TIME EXPIRED")
+
+	var level := get_tree().current_scene
+
+	var train = level.get_node("Train")
 	train.show_train()
 	train.start_moving()
+
+	if level.has_node("LoseSequence"):
+		print("LoseSequence found")
+		level.get_node("LoseSequence").play_lose()
+	else:
+		print("LoseSequence NOT found")

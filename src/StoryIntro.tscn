@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://1kxmeo7sgq7b" path="res://src/story_intro.gd" id="1_6b04o"]
 [ext_resource type="Texture2D" uid="uid://diy622jocuhvj" path="res://Images/Instructions/storyline.jpeg" id="2_2x6we"]
 [ext_resource type="AudioStream" uid="uid://b5mc5xodmx7qw" path="res://music/intro_story.wav" id="3_1p0yc"]
+[ext_resource type="AudioStream" uid="uid://6ka7m1whdhcq" path="res://music/instruments.wav" id="4_m3al5"]
 
 [node name="StoryIntro" type="Node2D" unique_id=1009206540]
 position = Vector2(0, -10)
@@ -17,3 +18,9 @@ texture = ExtResource("2_2x6we")
 
 [node name="Narration" type="AudioStreamPlayer" parent="." unique_id=951616487]
 stream = ExtResource("3_1p0yc")
+pitch_scale = 1.4
+
+[node name="Music_BG" type="AudioStreamPlayer" parent="." unique_id=1704165599]
+stream = ExtResource("4_m3al5")
+volume_db = -15.0
+autoplay = true

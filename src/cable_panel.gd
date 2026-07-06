@@ -97,10 +97,10 @@ func on_win() -> void:
 	# If the train hasn't arrived yet, force it to appear now
 	if timer_panel.time_remaining > 10.0:
 		train_sounds.play()
-		await get_tree().create_timer(2.0).timeout
+		await get_tree().create_timer(1.0).timeout
 		train.show_train()
 		train.start_moving()
-		await get_tree().create_timer(1.2).timeout
+		await get_tree().create_timer(1.0).timeout
 	
 	# Switch Honey Badger to the detonate animation
 	honey_badger.play_detonate_animation()

@@ -1,27 +1,26 @@
 [gd_scene format=3 uid="uid://b0xv1cnki1acw"]
 
 [ext_resource type="Script" uid="uid://qtlmejo843q2" path="res://src/lose_sequence.gd" id="1_lose"]
-[ext_resource type="VideoStream" uid="uid://bfouasc7lgn1a" path="res://Images/win_loose/Game_over.ogv" id="2_video"]
+[ext_resource type="VideoStream" uid="uid://byp1dr3bhsjmm" path="res://Images/win_loose/over.ogv" id="2_0h2ny"]
 [ext_resource type="Script" uid="uid://bhbos8yv3b3h5" path="res://src/win_popup.gd" id="4_popup"]
+[ext_resource type="Texture2D" uid="uid://curbjwxijaxg2" path="res://Images/win_loose/losee.png" id="4_w3t3u"]
 [ext_resource type="Script" uid="uid://bmkr75ojk3avs" path="res://src/quit_button.gd" id="5_quit"]
 [ext_resource type="Script" uid="uid://b0kwm3u17otbv" path="res://src/main_menu_button.gd" id="6_menu"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0h2ny"]
-load_path = "res://.godot/imported/losee.png-7024d4bc03f08033403260a837164fdb.ctex"
 
 [node name="LoseSequence" type="CanvasLayer" unique_id=506954302]
 script = ExtResource("1_lose")
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=415337865]
 auto_translate_mode = 1
-stream = ExtResource("2_video")
+stream = ExtResource("2_0h2ny")
 expand = true
 
-[node name="LosePopup" type="Sprite2D" parent="." unique_id=1852435460]
+[node name="LosePopup" type="Node2D" parent="." unique_id=995122170]
 show_behind_parent = true
-position = Vector2(123, 353)
-texture = SubResource("CompressedTexture2D_0h2ny")
 script = ExtResource("4_popup")
+
+[node name="Background" type="Sprite2D" parent="LosePopup" unique_id=692423633]
+texture = ExtResource("4_w3t3u")
 
 [node name="Quit_Button" type="TextureButton" parent="LosePopup" unique_id=1620868202]
 process_mode = 3

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://lgrn6107typs" path="res://src/menu/main_menu.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://bw5cr3ij7vkl6" path="res://Images/menu/menu.jpeg" id="2"]
 [ext_resource type="Texture2D" uid="uid://dpowm5wjlqtq6" path="res://Images/Instructions/instructions_small.png" id="3_actsw"]
+[ext_resource type="AudioStream" uid="uid://6ka7m1whdhcq" path="res://music/instruments.wav" id="4_y1rue"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7g6c6"]
 texture = ExtResource("3_actsw")
@@ -109,3 +110,7 @@ grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_7g6c6")
 theme_override_styles/focus = SubResource("StyleBoxTexture_1lbsp")
 autowrap_mode = 3
+
+[node name="Music_Player" type="AudioStreamPlayer2D" parent="." unique_id=456170931]
+stream = ExtResource("4_y1rue")
+autoplay = true

@@ -6,12 +6,25 @@ extends CanvasLayer
 
 func _ready() -> void:
 	layer = 100
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
+	video_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	video_player.visible = false
-	video_player.set_anchors_preset(Control.PRESET_FULL_RECT)
+
+	video_player.anchor_left = 0.0
+	video_player.anchor_top = 0.0
+	video_player.anchor_right = 1.0
+	video_player.anchor_bottom = 1.0
+	video_player.offset_left = 0.0
+	video_player.offset_top = 0.0
+	video_player.offset_right = 0.0
+	video_player.offset_bottom = 0.0
 	video_player.expand = true
+	video_player.z_index = 1000
+
 	video_player.finished.connect(_on_video_finished)
 
+	lose_popup.process_mode = Node.PROCESS_MODE_ALWAYS
 	lose_popup.visible = false
 
 
@@ -40,8 +53,16 @@ func play_lose() -> void:
 
 
 func _on_video_finished() -> void:
+	print("LOSE VIDEO FINISHED")
+
 	video_player.visible = false
 	video_player.stop()
+
 	lose_popup.visible = true
 	lose_popup.show_popup()
-	get_tree().paused = true
+
+	print("LosePopup visible: ", lose_popup.visible)
+	print("LosePopup position: ", lose_popup.global_position)
+	print("LosePopup scale: ", lose_popup.scale)
+
+	#get_tree().paused = true
