@@ -28,26 +28,39 @@ script = ExtResource("3_w3t3u")
 [node name="Background" type="TextureRect" parent="LosePopup" unique_id=1818356064]
 custom_minimum_size = Vector2(1280, 720)
 layout_mode = 0
+offset_left = -5.0
+offset_right = 1275.0
+offset_bottom = 720.0
 texture = ExtResource("4_w3t3u")
 expand_mode = 1
 stretch_mode = 6
 
 [node name="Quit_Button" type="TextureButton" parent="LosePopup" unique_id=1620868202]
 process_mode = 3
-layout_mode = 0
-offset_left = -454.0
-offset_top = 162.0
-offset_right = 65.0
-offset_bottom = 258.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.31300002
+anchor_top = 0.611
+anchor_right = 0.53000003
+anchor_bottom = 0.689
+offset_left = -3.6400146
+offset_top = -0.9200134
+offset_right = 9.599976
+offset_bottom = 8.919983
 stretch_mode = 0
 script = ExtResource("5_quit")
 
 [node name="Main_Menu_Button" type="TextureButton" parent="LosePopup" unique_id=921829946]
 process_mode = 3
-layout_mode = 0
-offset_left = -420.0
-offset_top = 13.0
-offset_right = 62.0
-offset_bottom = 88.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.321
+anchor_top = 0.50600004
+anchor_right = 0.544
+anchor_bottom = 0.578
+offset_left = -2.880005
+offset_top = -0.32003784
+offset_right = -0.32006836
+offset_bottom = 4.8399963
 stretch_mode = 0
 script = ExtResource("6_menu")

@@ -8,7 +8,8 @@ func _ready():
 
 
 func _on_pressed():
-	pass
+	get_tree().change_scene_to_file("res://src/menu/Intro.tscn")
+
 
 func _on_hover():
 	var tween = create_tween()
