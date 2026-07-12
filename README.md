@@ -4,7 +4,7 @@
 
 🦡 *Made with sabotage, sarcasm, and way too much coffee during a single weekend.*
 
-**[▶ Play the game](your-link-here)**
+**[▶ Play the game](https://sarafreitas-dev.github.io/Sabotage-Express/)**
 
 A pipe-connecting puzzle game where you play the villain — route the cables, reach the dynamite, and blow the tracks before the train (and its infuriatingly adorable passenger) makes it through.
 
