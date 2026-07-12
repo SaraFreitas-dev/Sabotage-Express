@@ -5,7 +5,7 @@ extends Node2D
 
 # Ajust the train on to the tracks
 @export_range(0.0, 1.0, 0.001) var track_y_ratio: float = 0.0
-@export var track_y_offset: float = -10.0
+@export var track_y_offset: float = 35.0
 
 var moving: bool = false
 var start_position: Vector2

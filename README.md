@@ -1,7 +1,17 @@
-*This project has been created as part of the 42 School during the 2026 Game Jame Event by `sarfreit`, `taalmeid` and `fjose-hi`.*
+*This project has been created as part of the 42 School during the 2026 Game Jam Event by `sarfreit`, `taalmeid` and `fjose-hi`.*
+
+# 💥 Sabotage Express Game
+
+🦡 *Made with sabotage, sarcasm, and way too much coffee during a single weekend.*
+
+**[▶ Play the game](your-link-here)**
+
+A pipe-connecting puzzle game where you play the villain — route the cables, reach the dynamite, and blow the tracks before the train (and its infuriatingly adorable passenger) makes it through.
+
+---
 
 
-# 💥 Sabotage Express 🦡
+# 💥 Introduction
 
 Somewhere out in the savanna, there's a train running on schedule — and inside it, a fluffy little quokka who just won't stop grinning.
 

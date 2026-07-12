@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://5pfbw25g5ou3" path="res://Images/Background/bg2.png" id="1_hmvch"]
 [ext_resource type="Script" uid="uid://uf846a2jlyo5" path="res://src/level_base.gd" id="1_ornsw"]
 [ext_resource type="Script" uid="uid://dpvf2v6h2ptep" path="res://src/tiles_grid.gd" id="2_8epqt"]
+[ext_resource type="Script" uid="uid://bq7yt2gmuxpqj" path="res://src/bg.gd" id="3_2wflb"]
 [ext_resource type="Texture2D" uid="uid://dulgfk58rgt5m" path="res://Images/floor_tiles/tile_border_corners.png" id="3_fsv82"]
 [ext_resource type="Texture2D" uid="uid://c83xvlsop8ca" path="res://Images/floor_tiles/grid_tile_edge.png" id="4_6cjsv"]
 [ext_resource type="Texture2D" uid="uid://c43cq0occej4g" path="res://Images/floor_tiles/tile.png" id="5_6umbf"]
@@ -142,12 +143,13 @@ format = 3
 script = ExtResource("1_ornsw")
 metadata/_edit_lock_ = true
 
-[node name="BG" type="Sprite2D" parent="." unique_id=2036484229]
+[node name="BG" type="Sprite2D" parent="." unique_id=2140487155]
 light_mask = 8
 visibility_layer = 8
-position = Vector2(641, 369.50003)
+z_index = -1
 scale = Vector2(1, 0.92)
 texture = ExtResource("1_hmvch")
+script = ExtResource("3_2wflb")
 metadata/_edit_lock_ = true
 
 [node name="Tiles_grid" type="Node2D" parent="." unique_id=1732861057]
