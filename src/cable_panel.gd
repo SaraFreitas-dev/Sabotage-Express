@@ -5,6 +5,19 @@ extends Node2D
 const PIECE_SCENE := preload("res://src/cable_piece.tscn")
 const HAND_SIZE := 3
 const SLOT_SPACING := 70.0
+ 
+# Preloaded up-front (bundled into initial load) instead of load()'d lazily
+# during gameplay. On Web exports, a runtime load() call can race against
+# the .pck still streaming over the network on a cold/first visit, causing
+# it to silently return null for a resource whose bytes haven't arrived yet.
+# preload() guarantees these are resolved before the game even starts.
+const PIECE_TEXTURES := {
+	"straight": preload("res://Images/tubes/straight.png"),
+	"elbow": preload("res://Images/tubes/elbow.png"),
+	"t-shape": preload("res://Images/tubes/t.png"),
+	"tip": preload("res://Images/tubes/termination.png"),
+	"cross": preload("res://Images/tubes/cross.png"),
+}
 var pieces_data: Dictionary = {}
 var original_pieces_data: Dictionary = {}
 var current_hand: Array = []
@@ -53,9 +66,9 @@ func _spawn_random_piece() -> void:
 		return
 	
 	var chosen_type: String = available_types[randi() % available_types.size()]
-	var texture: Texture2D = load(pieces_data[chosen_type]["image"])
+	var texture: Texture2D = PIECE_TEXTURES.get(chosen_type)
 	if texture == null:
-		print("ERROR: texture failed to load for type '", chosen_type, "' path=", pieces_data[chosen_type]["image"])
+		print("ERROR: no preloaded texture found for type '", chosen_type, "'")
 	
 	var piece := PIECE_SCENE.instantiate()
 	add_child(piece)
@@ -104,4 +117,3 @@ func on_win() -> void:
 	
 	# Only explode after Honey Badger "presses the button"
 	explosion.play_explosion(dynamite.global_position)
- 
