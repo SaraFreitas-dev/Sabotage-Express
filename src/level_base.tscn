@@ -146,7 +146,7 @@ metadata/_edit_lock_ = true
 light_mask = 8
 visibility_layer = 8
 position = Vector2(641, 369.50003)
-scale = Vector2(0.8378906, 0.7705079)
+scale = Vector2(1, 0.92)
 texture = ExtResource("1_hmvch")
 metadata/_edit_lock_ = true
 
@@ -184,6 +184,7 @@ animation = &"honey_badger_playing"
 
 [node name="Train" type="Node2D" parent="." unique_id=517424086]
 z_index = 1
+scale = Vector2(0.8, 0.8)
 script = ExtResource("6_h23so")
 
 [node name="Animated_Train" type="AnimatedSprite2D" parent="Train" unique_id=1777308846]
