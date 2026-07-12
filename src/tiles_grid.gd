@@ -21,10 +21,10 @@ const DIRS := {
 }
 const DIR_ORDER := ["up", "right", "down", "left"]
 
-# Aberturas de cada peça na rotação 0 
+# Openings for each piece type at rotation 0
 const PIECE_CONNECTIONS := {
 	"straight": ["left", "right"],
-	"elbow": ["down", "right"], 
+	"elbow": ["down", "right"],
 	"tip": ["left"],
 	"t-shape": ["left", "right", "up"],
 	"cross": ["up", "right", "down", "left"],
@@ -33,22 +33,22 @@ const PIECE_CONNECTIONS := {
 func build_grid(width: int, height: int) -> void:
 	grid_width = width
 	grid_height = height
-	
+
 	# Remove any cable pieces still placed on the grid from a previous game
 	for cell in occupied_cells.keys():
 		var piece = occupied_cells[cell]
 		if is_instance_valid(piece):
 			piece.queue_free()
 	occupied_cells.clear()
-	
+
 	for child in get_children():
 		child.queue_free()
-	
+
 	var screen_width := get_viewport_rect().size.x
 	var grid_pixel_width := width * TILE_SIZE
 	position.x = (screen_width - grid_pixel_width) / 2.0
 	position.y = grid_y_position
-	
+
 	for y in range(height):
 		for x in range(width):
 			var sprite := Sprite2D.new()
@@ -164,35 +164,37 @@ func _get_piece_connections(piece: Node) -> Array:
 func check_win() -> bool:
 	print("=== CHECK WIN ===")
 	print("Entry: ", detonator_entry, " | Exit (dynamite): ", dynamite_exit)
-	
+
 	if not is_cell_occupied(detonator_entry):
-		print("FALHA: entry não ocupada")
+		print("FAILED: entry cell is not occupied")
 		return false
-	
+
 	var start_piece: Node = occupied_cells[detonator_entry]
 	var start_connections: Array = _get_piece_connections(start_piece)
-	print("Peça entrada: ", start_piece.piece_type, " rot:", start_piece.rotation_degrees, " conn:", start_connections)
-	
+	print("Entry piece: ", start_piece.piece_type, " rot:", start_piece.rotation_degrees, " conn:", start_connections)
+
 	if not start_connections.has("left"):
-		print("FALHA: peça entrada não liga 'left'")
+		print("FAILED: entry piece does not connect 'left'")
 		return false
-	
+
 	var exit_neighbor: Vector2i = dynamite_exit - DIRS["right"]
-	print("Célula alvo (antes da dinamite): ", exit_neighbor)
-	
+	print("Target cell (before dynamite): ", exit_neighbor)
+
 	var visited: Dictionary = {}
 	var queue: Array = [detonator_entry]
 	visited[detonator_entry] = true
-	
+
 	while queue.size() > 0:
 		var cell: Vector2i = queue.pop_front()
 		var piece: Node = occupied_cells[cell]
 		var connections: Array = _get_piece_connections(piece)
-		print("Visitando ", cell, " peça:", piece.piece_type, " rot:", piece.rotation_degrees, " conn:", connections)
-		
+		print("Visiting ", cell, " piece:", piece.piece_type, " rot:", piece.rotation_degrees, " conn:", connections)
+
 		if cell == exit_neighbor and connections.has("right"):
-			return true
-		
+			# A path exists, but it only counts as a win if there are
+			# no dangling/open connections anywhere on the grid.
+			return _no_open_connections()
+
 		for dir in connections:
 			var neighbor: Vector2i = cell + DIRS[dir]
 			if visited.has(neighbor):
@@ -200,19 +202,52 @@ func check_win() -> bool:
 			if not is_inside_grid(neighbor):
 				continue
 			if not is_cell_occupied(neighbor):
-				print("  vizinho ", neighbor, " (", dir, ") vazio")
+				print("  neighbor ", neighbor, " (", dir, ") is empty")
 				continue
-			
+
 			var neighbor_piece: Node = occupied_cells[neighbor]
 			var neighbor_connections: Array = _get_piece_connections(neighbor_piece)
 			if neighbor_connections.has(_opposite(dir)):
 				visited[neighbor] = true
 				queue.append(neighbor)
 			else:
-				print("  vizinho ", neighbor, " não liga de volta (precisa ", _opposite(dir), ", tem ", neighbor_connections, ")")
-	
-	print("FALHA: não chegou à saída")
+				print("  neighbor ", neighbor, " does not connect back (needs ", _opposite(dir), ", has ", neighbor_connections, ")")
+
+	print("FAILED: did not reach the exit")
 	return false
+
+
+# Validates that every opening on every placed piece is properly closed:
+# either matched by a neighboring piece's opening in the opposite direction,
+# or one of the two intentional openings to the outside world
+# (the detonator entry and the dynamite exit).
+func _no_open_connections() -> bool:
+	var exit_neighbor: Vector2i = dynamite_exit - DIRS["right"]
+
+	for cell in occupied_cells.keys():
+		var piece: Node = occupied_cells[cell]
+		var connections: Array = _get_piece_connections(piece)
+
+		for dir in connections:
+			# Allowed exceptions: openings that intentionally face outside the grid
+			if cell == detonator_entry and dir == "left":
+				continue
+			if cell == exit_neighbor and dir == "right":
+				continue
+
+			var neighbor: Vector2i = cell + DIRS[dir]
+
+			if not is_inside_grid(neighbor) or not is_cell_occupied(neighbor):
+				print("FAILED: open pipe at ", cell, " facing ", dir)
+				return false
+
+			var neighbor_piece: Node = occupied_cells[neighbor]
+			var neighbor_connections: Array = _get_piece_connections(neighbor_piece)
+			if not neighbor_connections.has(_opposite(dir)):
+				print("FAILED: connection does not close at ", cell, " facing ", dir, " (neighbor has ", neighbor_connections, ")")
+				return false
+
+	return true
 
 
 """ For tests only !!!! Build a grid while there is no JSON

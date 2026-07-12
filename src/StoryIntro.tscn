@@ -5,16 +5,24 @@
 [ext_resource type="AudioStream" uid="uid://b5mc5xodmx7qw" path="res://music/intro_story.wav" id="3_1p0yc"]
 [ext_resource type="AudioStream" uid="uid://6ka7m1whdhcq" path="res://music/instruments.wav" id="4_m3al5"]
 
-[node name="StoryIntro" type="Node2D" unique_id=1009206540]
-position = Vector2(0, -10)
+[node name="StoryIntro" type="Control" unique_id=1437887080]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_6b04o")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1524812350]
-offset_top = -10.0
-offset_right = 1672.0
-offset_bottom = 931.0
-scale = Vector2(0.8, 0.8)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("2_2x6we")
+expand_mode = 1
 
 [node name="Narration" type="AudioStreamPlayer" parent="." unique_id=951616487]
 stream = ExtResource("3_1p0yc")
