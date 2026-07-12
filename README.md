@@ -51,7 +51,7 @@ Connect a continuous path of cables from the detonator to the dynamite before th
 
 ![Win Screen](docs/screenshots/win.png)
 
-Run out of time before completing the path, and the train arrives safely — sabotage failed.
+Run out of time before completing the path, and the train arrives safely — Watch an animation of the failed sabotage.
 
 ![Lose Screen](docs/screenshots/lose.png)
 
