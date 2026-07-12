@@ -32,7 +32,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2")
 expand_mode = 1
-stretch_mode = 6
 
 [node name="StartButton" type="Button" parent="." unique_id=2050612264]
 show_behind_parent = true
