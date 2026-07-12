@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by `sarfreit`, `taalmeid` and `fjose-hi`.*
+*This project has been created as part of the 42 School during the 2026 Game Jame Event by `sarfreit`, `taalmeid` and `fjose-hi`.*
 
 
 # 💥 Sabotage Express 🦡
@@ -10,11 +10,7 @@ Our honey badger has taken down snakes, outsmarted lions, and generally earned a
 **Sabotage Express** is a pipe-connecting puzzle game with a classic rivalry at its heart. The mission: wire up the cables, reach the dynamite, and blow the tracks before the train (and its infuriatingly adorable passenger) makes it through, so that the honey badger finally gets his revenge! 
 Built from scratch in just **48 hours** during a Game Jam, one grid, one countdown, and one wounded ego at a time.
 
-![Main Menu](screenshots/menu.png)
-
----
-
-![Main Menu](screenshots/menu.png)
+![Main Menu](docs/screenshots/menu.png)
 
 ---
 
@@ -28,7 +24,7 @@ The theme was:
 
 Instead of playing the hero trying to stop a disaster, you play as the honey badger villain — routing cables across a grid to detonate dynamite and sabotage the train before it arrives.
 
-![Gameplay](screenshots/gameplay.png)
+![Gameplay](docs/screenshots/gameplay.png)
 
 ---
 
@@ -53,11 +49,11 @@ If you'd rather run the project directly from the source files:
 
 Connect a continuous path of cables from the detonator to the dynamite before the train arrives, then watch the honey badger set off the explosion.
 
-![Win Screen](screenshots/win.png)
+![Win Screen](docs/screenshots/win.png)
 
 Run out of time before completing the path, and the train arrives safely — sabotage failed.
 
-![Lose Screen](screenshots/lose.png)
+![Lose Screen](docs/screenshots/lose.png)
 
 ---
 
